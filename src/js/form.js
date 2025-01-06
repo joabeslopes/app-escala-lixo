@@ -15,7 +15,7 @@ const sendForm = function(event){
 
     $.ajax( {
                 type: "POST",
-                url: '/api/listaPessoas',
+                url: '/api/gerarEscala',
                 data: request,
                 contentType: "application/json",
                 success: function (response) { console.log(response); 

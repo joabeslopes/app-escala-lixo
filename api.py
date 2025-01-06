@@ -4,6 +4,7 @@ from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
 from typing import List
 
+from escala import gerarEscala
 
 app = FastAPI()
 
@@ -21,7 +22,7 @@ class Pessoa(BaseModel):
 class myRequest(BaseModel):
     listaPessoas: List[Pessoa]
 
-@app.post("/listaPessoas")
+@app.post("/gerarEscala")
 async def lista_pessoas(request: myRequest):
 
     listaFiltrada = [x for x in request.listaPessoas if not x.nome == ""]
@@ -29,4 +30,6 @@ async def lista_pessoas(request: myRequest):
     if not listaFiltrada:
         raise HTTPException(status_code=400, detail="Preencher as pessoas")
 
-    return {"recebido": listaFiltrada}
+    escala = gerarEscala('2025-01', request.listaPessoas)
+
+    return {"escala": escala}
