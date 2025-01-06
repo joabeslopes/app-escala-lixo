@@ -30,6 +30,6 @@ async def lista_pessoas(request: myRequest):
     if not listaFiltrada:
         raise HTTPException(status_code=400, detail="Preencher as pessoas")
 
-    escala = gerarEscala('2025-01', request.listaPessoas)
+    escala = gerarEscala('2025-01-06', request.listaPessoas)
 
     return {"escala": escala}
