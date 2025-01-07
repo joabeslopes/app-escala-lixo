@@ -45,7 +45,7 @@ def gerarMesLista(isoDate:str):
         # preenche os dias da semana, ate completar ela 
         while (semana[6] == '0'):
             diaAtual = mydate.weekday()
-            semana[diaAtual] = mydate.strftime("%Y-%m-%d")
+            semana[diaAtual] = mydate.strftime("%d/%m/%Y")
             mydate += timedelta(days=1)
             # para de completar se chegar no fim do mes
             if (mydate.month != mes):
