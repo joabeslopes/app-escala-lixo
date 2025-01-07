@@ -13,7 +13,6 @@ const addInputPessoa = function(evt){
 
     $(newPessoaDiv).append(newInputPessoa);
     $(newPessoaDiv).append(newPessoaSpan);
-    $(newPessoaDiv).append(newSeparator.clone());
     $(newPessoaDiv).append(newPessoaHomeOffice);
     $(newPessoaDiv).append(newSeparator.clone());
 
