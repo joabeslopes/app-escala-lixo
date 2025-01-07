@@ -4,11 +4,19 @@ Web App em python que recebe a lista das pessoas com seu dia de home office, e r
 
 É um app simples e objetivo.
 
-Para rodar ele, basta ter o python instalado na maquina.
+Para rodar ele, primeiro deve instalar o Python, e depois abrir o terminal na pasta do projeto.
 
-É recomendavel criar um ambiente virtual na pasta do projeto pra instalar as dependencias, pra esse projeto o padrao é a pasta .venv/ :
+Com o python instalado, é recomendavel criar um ambiente virtual na pasta do projeto pra instalar as dependencias, pra esse projeto o nome padrao é .venv/ :
 
-> python3 -m venv .venv
+> python -m venv .venv
+
+Depois ativar o ambiente, no caso do Windows (powershell):
+
+> & .venv\Scripts\Activate.ps1
+
+No caso de uma distro linux:
+
+> source .venv/bin/activate
 
 Agora instala as dependencias:
 
@@ -16,7 +24,7 @@ Agora instala as dependencias:
 
 Feito isso, só rodar:
 
-> python3 main.py
+> python main.py
 
 Vai por padrao rodar na porta 5000, só acessar http://localhost:5000
 
