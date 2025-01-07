@@ -1,4 +1,4 @@
-const addInputPessoa = function(){
+const addInputPessoa = function(evt){
 
     const newInputPessoa = $("<input>", {type: "text", name: "nome", class: "input", placeholder:"Nome"});
     const newPessoaSpan = $("<span>", {class: "remove"}).text("X");
@@ -17,19 +17,19 @@ const addInputPessoa = function(){
     $(newPessoaDiv).append(newPessoaHomeOffice);
     $(newPessoaDiv).append(newSeparator.clone());
 
-    $("#listaPessoas").append(newPessoaDiv);
+    $(evt.data.tagListaPessoas).append(newPessoaDiv);
 
-}
+};
 
-const removeInputPessoa = function(){
+const removeInputPessoa = function(evt){
     $(this).parent().remove();
-}
+};
 
-const exportPessoas = function (){
+const getListaPessoas = function (tagListaPessoas){
 
     let listapessoas = [];
     
-    $("#listaPessoas").children().each( function(){
+    $(tagListaPessoas).children().each( function(){
 
         let nome = $(this).children('input[name="nome"]').val();
         nome = nome.trim();
@@ -52,6 +52,6 @@ const exportPessoas = function (){
 
     return listapessoas;
 
-}
+};
 
-export { addInputPessoa, removeInputPessoa, exportPessoas }
+export { addInputPessoa, getListaPessoas };

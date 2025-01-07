@@ -21,15 +21,14 @@ class Pessoa(BaseModel):
 
 class myRequest(BaseModel):
     listaPessoas: List[Pessoa]
+    ISODate: str
 
 @app.post("/gerarEscala")
 async def lista_pessoas(request: myRequest):
 
-    listaFiltrada = [x for x in request.listaPessoas if not x.nome == ""]
+    escala = gerarEscala(request.ISODate, request.listaPessoas)
 
-    if not listaFiltrada:
-        raise HTTPException(status_code=400, detail="Preencher as pessoas")
-
-    escala = gerarEscala('2025-01-06', request.listaPessoas)
+    if not escala:
+        raise HTTPException(status_code=400, detail="Erro nos dados, preencha novamente")
 
     return {"escala": escala}

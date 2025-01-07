@@ -1,15 +1,21 @@
-import { addInputPessoa, exportPessoas } from "./pessoas";
+import { addInputPessoa, getListaPessoas } from "./pessoas";
+import { getInputDate, addInputDate } from "./date";
+
 
 const sendForm = function(event){
 
-    let listapessoas = exportPessoas();
+    const listapessoas = getListaPessoas("#listaPessoas");
 
     if (listapessoas.length == 0){
         alert("Preencher informação completa");
         return false;
     }
 
-    const requestObject = { listaPessoas: listapessoas };
+    const ISODate = getInputDate("#dateSelector");
+
+    const requestObject = { listaPessoas: listapessoas,
+                            ISODate: ISODate
+                        };
 
     const request = JSON.stringify(requestObject);
 
@@ -18,22 +24,49 @@ const sendForm = function(event){
                 url: '/api/gerarEscala',
                 data: request,
                 contentType: "application/json",
-                success: function (response) { console.log(response); 
-                                                $("#meuform")[0].reset();
-                                            },
+                success: showEscala,
                 error: function(){ alert("erro na api"); }
             }
         );
-}
+};
+
+
+const showEscala = function(response){
+
+    $("#escalaMes").remove();
+
+    const escala = response["escala"];
+    const listaDias = $("<p>", {class: "output"});
+    let escalaString = "";
+    const output = $("<div>", {class: "output-container", id:"escalaMes"});
+
+    escala.forEach( (semana) => {
+        semana.forEach( (dia) => {
+            let diaKey = Object.keys(dia)[0];
+            escalaString += diaKey + " - " + dia[diaKey] + "<br>";
+        });
+        escalaString += "<br>";
+    });
+
+    $(listaDias).html(escalaString);
+    $(output).html(listaDias);
+    
+    $("#app").append(output);
+
+    // $("#meuform")[0].reset();
+
+};
+
 
 const onFormLoad = function(){
 
-    addInputPessoa();
+    addInputPessoa( { data: {tagListaPessoas: "#listaPessoas"} } );
+    addInputDate("#dateSelector");
 
-    $("#addPessoa").click( addInputPessoa );
+    $("#addPessoa").click({tagListaPessoas: "#listaPessoas"}, addInputPessoa );
 
     $("#enviar").click( sendForm );
 
-}
+};
 
 export { onFormLoad };
