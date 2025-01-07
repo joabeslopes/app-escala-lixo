@@ -1,5 +1,4 @@
 import mydates as mydates
-from collections import deque
 
 def gerarEscala(isoDate, listaPessoas):
 
