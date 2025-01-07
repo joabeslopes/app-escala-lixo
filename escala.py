@@ -4,27 +4,37 @@ from collections import deque
 def gerarEscala(isoDate, listaPessoas):
 
     mesLista = mydates.gerarMesLista(isoDate)
-
+    newPessoasLista = listaPessoas.copy()
     newMes = []
-    filaPessoas = deque(listaPessoas)
     for semana in mesLista:
         newSemana = []
         for dia in range(7):
+            if len(newPessoasLista) == 0:
+                newPessoasLista = listaPessoas.copy()
+
             if semana[dia] != '0':
-                escalaDia = {}
-                while (escalaDia == {}):
-                    if len(filaPessoas) < 2:
-                        filaPessoas.extend(listaPessoas)
-
-                    pessoa = filaPessoas.popleft()
-                    diaHome = mydates.getDiaIndex(pessoa.homeOffice)
-                    if diaHome != dia:
-                        escalaDia = {semana[dia]: pessoa.nome }
-                    else:
-                        filaPessoas.append(pessoa)
-
-                newSemana.append(escalaDia)
+                # tenta gerar uma vez
+                escalaDia = geraEscalaDia(dia, semana[dia], newPessoasLista)
+                # caso nao funcione, extende a lista e tenta de novo
+                if (escalaDia == {}):
+                    newPessoasLista.extend(listaPessoas.copy())
+                    escalaDia = geraEscalaDia(dia, semana[dia], newPessoasLista)
+                # caso funcione faz o append, se nao ignora e vai para o proximo
+                if (escalaDia != {}):
+                    newSemana.append(escalaDia)
 
         newMes.append(newSemana)
 
     return newMes
+
+
+def geraEscalaDia(diaIdx, diaString, listaPessoas):
+    escalaDia = {}
+    for pessoaIdx in range(len(listaPessoas)):
+        pessoa = listaPessoas[pessoaIdx]
+        diaHome = mydates.getDiaIndex(pessoa.homeOffice)
+        if diaHome != diaIdx:
+            escalaDia = {diaString: pessoa.nome }
+            del listaPessoas[pessoaIdx]
+            break
+    return escalaDia
