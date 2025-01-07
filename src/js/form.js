@@ -36,20 +36,23 @@ const showEscala = function(response){
     $("#escalaMes").remove();
 
     const escala = response["escala"];
-    const listaDias = $("<p>", {class: "output"});
+    const diaOutput = $("<p>", {class: "output"});
+    const br = $("<br>");
     let escalaString = "";
     const output = $("<div>", {class: "output-container", id:"escalaMes"});
 
     escala.forEach( (semana) => {
         semana.forEach( (dia) => {
-            let diaKey = Object.keys(dia)[0];
-            escalaString += diaKey + " - " + dia[diaKey] + "<br>";
-        });
-        escalaString += "<br>";
-    });
 
-    $(listaDias).html(escalaString);
-    $(output).html(listaDias);
+            escalaString = dia["dia"] + " - " + dia["nome"];
+            const diaAtual = diaOutput.clone();
+            $(diaAtual).text(escalaString);
+            $(output).append(diaAtual);
+
+        });
+
+        $(output).append(br.clone());
+    });
     
     $("#app").append(output);
 

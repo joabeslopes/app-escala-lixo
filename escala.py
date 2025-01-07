@@ -34,7 +34,9 @@ def geraEscalaDia(diaIdx, diaString, listaPessoas):
         pessoa = listaPessoas[pessoaIdx]
         diaHome = mydates.getDiaIndex(pessoa.homeOffice)
         if diaHome != diaIdx:
-            escalaDia = {diaString: pessoa.nome }
+            escalaDia = { "dia": diaString,
+                          "nome": pessoa.nome
+                        }
             del listaPessoas[pessoaIdx]
             break
     return escalaDia
