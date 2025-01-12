@@ -1,10 +1,10 @@
 import { addInputPessoa, getListaPessoas } from "./pessoas";
 import { getInputDate, addInputDate } from "./date";
+import {myCreateElement} from "./default";
 
+function sendForm(event){
 
-const sendForm = function(event){
-
-    const listapessoas = getListaPessoas("#listaPessoas");
+    const listapessoas = getListaPessoas("listaPessoas");
 
     if (listapessoas.length == 0){
         alert("Preencher informação completa");
@@ -19,57 +19,59 @@ const sendForm = function(event){
 
     const request = JSON.stringify(requestObject);
 
-    $.ajax( {
-                type: "POST",
-                url: '/api/gerarEscala',
-                data: request,
-                contentType: "application/json",
-                success: showEscala,
-                error: function(){ alert("erro na api"); }
-            }
-        );
+    fetch("/api/gerarEscala", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: request,
+        }
+    ).then( response => response.json() )
+    .then( showEscala )
+    .catch( function(){ alert("erro na api"); } );
+
 };
 
 
-const showEscala = function(response){
+function showEscala(response) {
 
-    $("#escalaMes").remove();
+    const escalaMes = document.getElementById("escalaMes");
+
+    if (escalaMes){
+        escalaMes.remove();
+    }
 
     const escala = response["escala"];
-    const diaOutput = $("<p>", {class: "output"});
-    const br = $("<br>");
+    const diaOutput = myCreateElement("p", {class: "output"});
+    const br = myCreateElement("br");
     let escalaString = "";
-    const output = $("<div>", {class: "output-container", id:"escalaMes"});
+    const output = myCreateElement("div", {class: "output-container", id:"escalaMes"});
 
     escala.forEach( (semana) => {
         semana.forEach( (dia) => {
 
             escalaString = dia["dia"] + " - " + dia["nome"];
-            const diaAtual = diaOutput.clone();
-            $(diaAtual).text(escalaString);
-            $(output).append(diaAtual);
+            const diaAtual = diaOutput.cloneNode(true);
+            diaAtual.innerText = escalaString;
+            output.appendChild(diaAtual);
 
         });
 
-        $(output).append(br.clone());
+        output.appendChild(br.cloneNode(true));
     });
     
-    $("#app").append(output);
-
-    // $("#meuform")[0].reset();
+    document.getElementById("app").appendChild(output);
 
 };
 
 
-const onFormLoad = function(){
+export default function onFormLoad(){
 
-    addInputPessoa( { data: {tagListaPessoas: "#listaPessoas"} } );
-    addInputDate("#dateSelector");
+    addInputPessoa("listaPessoas");
+    addInputDate("dateSelector");
 
-    $("#addPessoa").click({tagListaPessoas: "#listaPessoas"}, addInputPessoa );
+    document.getElementById("addPessoa").onclick = (evt) => {addInputPessoa("listaPessoas") };
 
-    $("#enviar").click( sendForm );
+    document.getElementById("enviar").onclick = sendForm;
 
 };
-
-export { onFormLoad };
