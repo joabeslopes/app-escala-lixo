@@ -43,22 +43,21 @@ function showEscala(response) {
 
     const escala = response["escala"];
     const diaOutput = myCreateElement("p", {class: "output"});
-    const br = myCreateElement("br");
     let escalaString = "";
     const output = myCreateElement("div", {class: "output-container", id:"escalaMes"});
 
     escala.forEach( (semana) => {
         semana.forEach( (dia) => {
 
-            escalaString = dia["dia"] + " - " + dia["nome"];
-            const diaAtual = diaOutput.cloneNode(true);
-            diaAtual.innerText = escalaString;
-            output.appendChild(diaAtual);
+            escalaString += dia["dia"] + " - " + dia["nome"] + '\n';
 
         });
 
-        output.appendChild(br.cloneNode(true));
+        escalaString += '\n';
     });
+
+    diaOutput.innerText = escalaString;
+    output.appendChild(diaOutput);
     
     document.getElementById("app").appendChild(output);
 
