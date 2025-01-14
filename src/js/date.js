@@ -1,19 +1,21 @@
+import {myCreateElement} from "./default";
+
 const dataAtual = new Date();
 
-const addInputDate = function(tagDate){
+export function addInputDate(tagDate){
 
     const stringDataAtual = dataAtual.toISOString().split('T')[0];
 
-    const divDate = $("<input>", {type: "date", class: "input", min: stringDataAtual, value: stringDataAtual});
+    const dateAttributes = {type: "date", class: "input", min: stringDataAtual, value: stringDataAtual};
 
-    $(tagDate).append(divDate);
+    const divDate = myCreateElement("input", {type: "date", class: "input", min: stringDataAtual, value: stringDataAtual});
 
-};
-
-const getInputDate = function(tagDate){
-
-    return $(tagDate).children('input').val();
+    document.getElementById(tagDate).appendChild(divDate);
 
 };
 
-export { getInputDate, addInputDate };
+export function getInputDate(tagDate){
+
+    return document.querySelector(tagDate + " input").value;
+
+};

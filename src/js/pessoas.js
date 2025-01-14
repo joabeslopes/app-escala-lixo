@@ -1,38 +1,45 @@
-const addInputPessoa = function(evt){
+import {myCreateElement, myLoad} from "./default";
 
-    const newInputPessoa = $("<input>", {type: "text", name: "nome", class: "input", placeholder:"Nome"});
-    const newPessoaSpan = $("<span>", {class: "remove"}).text("X");
-    const newPessoaHomeOffice = $("<select>", {class:"input", name:"homeOffice"});
-    const newSeparator = $("<div>", {class: "separator"});
+export function addInputPessoa(tagPessoas) {
 
-    const newPessoaDiv = $("<div>", {name: "pessoaDiv"});
+    const newInputPessoa = myCreateElement("input", {type: "text", name: "nome", class: "input", placeholder:"Nome"});
+    const newPessoaSpan = myCreateElement("span", {class: "remove"});
+    newPessoaSpan.innerText = "X";
+    const newPessoaHomeOffice = myCreateElement("select", {class:"input", name:"homeOffice"});
+    const newSeparator = myCreateElement("div", {class: "separator"});
 
-    $(newPessoaSpan).click( removeInputPessoa );
+    const newPessoaDiv = myCreateElement("div", {name: "pessoaDiv"});
 
-    $(newPessoaHomeOffice).load('/html/dias-home.html');
+    newPessoaSpan.onclick = removeInputPessoa;
 
-    $(newPessoaDiv).append(newInputPessoa);
-    $(newPessoaDiv).append(newPessoaSpan);
-    $(newPessoaDiv).append(newPessoaHomeOffice);
-    $(newPessoaDiv).append(newSeparator.clone());
+    myLoad(newPessoaHomeOffice, '/html/dias-home.html');
 
-    $(evt.data.tagListaPessoas).append(newPessoaDiv);
+    newPessoaDiv.appendChild(newInputPessoa);
+    newPessoaDiv.appendChild(newPessoaSpan);
+    newPessoaDiv.appendChild(newPessoaHomeOffice);
+    newPessoaDiv.appendChild(newSeparator);
+
+    document.getElementById(tagPessoas).appendChild(newPessoaDiv);
 
 };
 
-const removeInputPessoa = function(evt){
-    $(this).parent().remove();
+function removeInputPessoa(evt){
+    evt.srcElement.parentNode.remove();
 };
 
-const getListaPessoas = function (tagListaPessoas){
+export function getListaPessoas(tagListaPessoas){
 
     let listapessoas = [];
-    
-    $(tagListaPessoas).children().each( function(){
 
-        let nome = $(this).children('input[name="nome"]').val();
+    const divListaPessoas = document.getElementById(tagListaPessoas).children;
+
+    for (let i=0; i<divListaPessoas.length; i++){
+
+        const child = divListaPessoas[i];
+
+        let nome = child.querySelector('input[name="nome"]').value;
         nome = nome.trim();
-        let homeOffice = $(this).children('select[name="homeOffice"]').val();
+        let homeOffice = child.querySelector('select[name="homeOffice"]').value;
 
         if (nome.length != 0 && homeOffice.length != 0){
             const pessoa = {
@@ -43,14 +50,10 @@ const getListaPessoas = function (tagListaPessoas){
             listapessoas.push(pessoa);
         } 
         else {
-            listapessoas = [];
-            return false;
+            return [];
         };
-
-    });
+    }
 
     return listapessoas;
 
 };
-
-export { addInputPessoa, getListaPessoas };

@@ -1,7 +1,15 @@
-import { onFormLoad } from "./js/form";
+import onFormLoad from "./js/form";
 
+const app = document.getElementById("app");
 
-$("#app").ready( function() {
+const form = document.createElement("div");
 
-    $("#app").load('/html/form.html', onFormLoad);
-});
+fetch("/html/form.html").then( 
+                        response => response.text()
+                    ).then( 
+                        (text) => {
+                            form.innerHTML = text;
+                            app.appendChild(form);
+                            onFormLoad();
+                    }
+                    );
