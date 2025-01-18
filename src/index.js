@@ -1,15 +1,15 @@
-import onFormLoad from "./js/form";
+import { MyForm } from "./js/MyForm";
 
 const app = document.getElementById("app");
 
-const form = document.createElement("div");
+const formdiv = document.createElement("div");
 
 fetch("/html/form.html").then( 
                         response => response.text()
                     ).then( 
                         (text) => {
-                            form.innerHTML = text;
-                            app.appendChild(form);
-                            onFormLoad();
+                            formdiv.innerHTML = text;
+                            app.appendChild(formdiv);
+                            new MyForm();
                     }
                     );
