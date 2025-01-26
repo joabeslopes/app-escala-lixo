@@ -1,11 +1,13 @@
 import PropTypes from 'prop-types';
 import Pessoa from "../Pessoa/Pessoa";
 import "./ListaPessoas.css";
+import { v4 as uuidv4 } from 'uuid';
 
 export default function ListaPessoas({listaPessoas, setListaPessoas}){
 
   const addPessoa = function() {
-    const newLista = [...listaPessoas, {nome: "", homeOffice: ""} ];
+    const pessoaId = uuidv4();
+    const newLista = [...listaPessoas, {nome: "", homeOffice: "", id: pessoaId} ];
     setListaPessoas( newLista );
   }; 
 
@@ -15,7 +17,7 @@ export default function ListaPessoas({listaPessoas, setListaPessoas}){
       {listaPessoas.map((pessoa, index) => (
 
         <Pessoa 
-          key={index}
+          key={pessoa.id}
           pessoa={pessoa}
           index={index}
           listaPessoas={listaPessoas}

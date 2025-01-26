@@ -56,7 +56,8 @@ export default function Pessoa({pessoa, index, listaPessoas, setListaPessoas}) {
 Pessoa.propTypes = {
     pessoa: PropTypes.exact( {
         nome: PropTypes.string,
-        homeOffice: PropTypes.string
+        homeOffice: PropTypes.string,
+        id: PropTypes.string
     } ),
     index: PropTypes.number,
     listaPessoas: PropTypes.array , 

@@ -39,22 +39,29 @@ function gerarEscala(request, setEscalaMes) {
 
 export default function MainForm() {
 
-  const [listaPessoas, setListaPessoas] = useState([{nome: '', homeOffice: ''}]);
+  const [listaPessoas, setListaPessoas] = useState([{ nome: '', homeOffice: '', id: '' }]);
 
   const [escalaMes, setEscalaMes] = useState([]);
 
   const diaAtual = new Date().toISOString().split('T')[0];
   const [ISODate, setISODate] = useState(diaAtual);
 
-  
+
   const handleSubmit = function (evt) {
 
     evt.preventDefault();
 
     if (listaPessoas.length > 0) {
 
+      const listaFiltrada = listaPessoas.map((pessoa) => {
+        return {
+          nome: pessoa.nome,
+          homeOffice: pessoa.homeOffice,
+        }
+      });
+
       const dados = {
-        listaPessoas: listaPessoas,
+        listaPessoas: listaFiltrada,
         ISODate: ISODate
       };
 
@@ -70,13 +77,13 @@ export default function MainForm() {
         <h1 className="form-title">Escala do lixo</h1>
 
         <ListaPessoas listaPessoas={listaPessoas} setListaPessoas={setListaPessoas} />
-        
-        <input  required
-                type="date" 
-                className="input" 
-                value={ISODate}
-                min={diaAtual}
-                onChange={(evt) => setISODate(evt.target.value)} />
+
+        <input required
+          type="date"
+          className="input"
+          value={ISODate}
+          min={diaAtual}
+          onChange={(evt) => setISODate(evt.target.value)} />
 
         <button type="submit" className="submit">Enviar</button>
       </form>
