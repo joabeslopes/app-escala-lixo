@@ -38,8 +38,8 @@ async def lista_pessoas(request: myRequest):
 
 
 
-# static = FastAPI()
+static = FastAPI()
 
-# static.mount("/api", app)
+static.mount("/api", app)
 
-# static.mount("/", StaticFiles(directory="dist", html=True), name="static")
+static.mount("/", StaticFiles(directory="dist", html=True), name="static")
