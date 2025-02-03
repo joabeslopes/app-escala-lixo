@@ -3,6 +3,8 @@ import mydates as mydates
 def gerarEscala(isoDate, listaPessoas):
 
     mesLista = mydates.gerarMesLista(isoDate)
+    if not mesLista:
+        return []
     newPessoasLista = listaPessoas.copy()
     newMes = []
     for semana in mesLista:

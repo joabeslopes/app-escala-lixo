@@ -1,16 +1,24 @@
 {
-  "name": "python-fastapi",
+  "name": "app-escala-lixo",
+  "private": true,
   "version": "1.0.0",
-  "main": "index.js",
+  "type": "module",
   "scripts": {
-    "build": "webpack --devtool source-map",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "vite --host",
+    "build": "vite build",
+    "preview": "vite preview"
   },
-  "author": "",
-  "license": "ISC",
-  "description": "",
+  "dependencies": {
+    "prop-types": "^15.8.1",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "uuid": "^11.0.5"
+  },
   "devDependencies": {
-    "webpack": "^5.97.1",
-    "webpack-cli": "^6.0.1"
+    "@types/react": "^18.3.18",
+    "@types/react-dom": "^18.3.5",
+    "@vitejs/plugin-react": "^4.3.4",
+    "globals": "^15.14.0",
+    "vite": "^6.0.5"
   }
 }
