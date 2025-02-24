@@ -23,21 +23,23 @@ def gerarMesLista(isoDate:str):
 
     dateSplit = isoDate.split('-')
 
-    if len(dateSplit) < 2:
+    if len(dateSplit) < 3:
         return []
 
     anoString = dateSplit[0]
     mesString = dateSplit[1]
+    diaString = dateSplit[2]
 
-    if (len(anoString) != 4) or (len(mesString) != 2):
+    if (len(anoString) != 4) or (len(mesString) != 2) or (len(diaString) != 2):
         return []
 
-    mes = int(mesString)
     ano = int(anoString)
+    mes = int(mesString)
+    dia = int(diaString)
     brazilCalendar = Brazil()
-    mydate = date(ano, mes, 1)
+    mydate = date(ano, mes, dia)
     mesLista = []
-    diaCounter = 0
+    diaCounter = dia - 1
 
     while (mydate.month == mes):
         semana = ['0','0','0','0','0','0','0']
