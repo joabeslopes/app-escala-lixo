@@ -10,6 +10,10 @@ dicionarioDias = {
     "sexta": 4,
 }
 
+exclusaoDiasSemana = [
+    4, # Sexta
+]
+
 def getDiaIndex(dia:str):
     if dia in dicionarioDias:
         return dicionarioDias[dia]
@@ -58,7 +62,7 @@ def gerarMesLista(isoDate:str):
             if (semana[i] != '0' ):
                 diaCounter +=1
                 testeDia = date(ano, mes, diaCounter)
-                if not (brazilCalendar.is_working_day(testeDia)) :
+                if not (brazilCalendar.is_working_day(testeDia)) or (testeDia.weekday() in exclusaoDiasSemana):
                     semana[i] = '0'
 
         # só acrescenta a semana se ela tiver dias uteis
