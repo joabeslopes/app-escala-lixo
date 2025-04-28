@@ -1,8 +1,8 @@
 import mydates as mydates
 
-def gerarEscala(isoDate, listaPessoas):
+def gerarEscala(DiaInicial, listaPessoas, listaExclusaoSemana):
 
-    mesLista = mydates.gerarMesLista(isoDate)
+    mesLista = mydates.gerarMesLista(DiaInicial, listaExclusaoSemana)
     if not mesLista:
         return []
     newPessoasLista = listaPessoas.copy()

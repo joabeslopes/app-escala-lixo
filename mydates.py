@@ -8,6 +8,8 @@ dicionarioDias = {
     "quarta": 2,
     "quinta": 3,
     "sexta": 4,
+    "sabado": 5,
+    "domingo": 6
 }
 
 def getDiaIndex(dia:str):
@@ -16,28 +18,34 @@ def getDiaIndex(dia:str):
     else:
         return -1
 
-def gerarMesLista(isoDate:str):
+def gerarMesLista(diaInicial:str, listaExclusaoSemana: list):
 
-    if len(isoDate) < 7:
+    if len(diaInicial) < 10:
         return []
 
-    dateSplit = isoDate.split('-')
+    dateSplit = diaInicial.split('-')
 
-    if len(dateSplit) < 2:
+    if len(dateSplit) < 3:
         return []
 
     anoString = dateSplit[0]
     mesString = dateSplit[1]
+    diaString = dateSplit[2]
 
-    if (len(anoString) != 4) or (len(mesString) != 2):
+    if (len(anoString) != 4) or (len(mesString) != 2) or (len(diaString) != 2):
         return []
 
-    mes = int(mesString)
     ano = int(anoString)
+    mes = int(mesString)
+    dia = int(diaString)
     brazilCalendar = Brazil()
-    mydate = date(ano, mes, 1)
+    mydate = date(ano, mes, dia)
     mesLista = []
-    diaCounter = 0
+    diaCounter = dia - 1
+
+    listaFeriados = [h[0] for h in brazilCalendar.holidays(ano)]
+
+    exclusaoSemana = [getDiaIndex(diaExcluido) for diaExcluido in listaExclusaoSemana]
 
     while (mydate.month == mes):
         semana = ['0','0','0','0','0','0','0']
@@ -56,7 +64,7 @@ def gerarMesLista(isoDate:str):
             if (semana[i] != '0' ):
                 diaCounter +=1
                 testeDia = date(ano, mes, diaCounter)
-                if not (brazilCalendar.is_working_day(testeDia)) :
+                if (testeDia in listaFeriados) or (testeDia.weekday() in exclusaoSemana):
                     semana[i] = '0'
 
         # só acrescenta a semana se ela tiver dias uteis
