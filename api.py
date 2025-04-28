@@ -24,18 +24,18 @@ class Pessoa(BaseModel):
 
 class myRequest(BaseModel):
     listaPessoas: List[Pessoa]
-    ISODate: str
+    DiaInicial: str
+    listaExclusaoSemana: list
 
 @app.post("/gerarEscala")
 async def lista_pessoas(request: myRequest):
 
-    escala = gerarEscala(request.ISODate, request.listaPessoas)
+    escala = gerarEscala(request.DiaInicial, request.listaPessoas, request.listaExclusaoSemana)
 
     if not escala:
         raise HTTPException(status_code=400, detail="Erro nos dados, preencha novamente")
 
     return {"escala": escala}
-
 
 
 static = FastAPI()
