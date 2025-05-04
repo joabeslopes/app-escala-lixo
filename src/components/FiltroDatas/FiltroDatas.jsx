@@ -23,38 +23,38 @@ export default function FiltroDatas({diaInicial, setDiaInicial, listaExclusaoSem
   };
 
   return (
-    <>
-    <h2>A partir de</h2>
-      <input 
-        required
-        type="date"
+    <div className='filtro-datas'>
+      <h2>A partir de</h2>
+        <input 
+          required
+          type="date"
+          className="input"
+          value={diaInicial}
+          min={diaAtual}
+          onChange={(evt) => setDiaInicial(evt.target.value)} />
+
+      <h2>Dias da semana sem escala</h2>
+      {
+        listaExclusaoSemana.map( (dia) => <a>* {dia}</a> )
+      }
+
+      <select
         className="input"
-        value={diaInicial}
-        min={diaAtual}
-        onChange={(evt) => setDiaInicial(evt.target.value)} />
-
-    <h2>Dias da semana sem escala</h2>
-    {
-      listaExclusaoSemana.map( (dia) => <a>* {dia}</a> )
-    }
-
-    <select
-      className="input"
-      value=""
-      name="listaExclusaoSemana"
-      onChange={(evt) => {addExclusaoSemana(evt)} }
-    >
-      <option value="">Dia sem escala</option>
-      <option value="segunda">Segunda</option>
-      <option value="terça">Terça</option>
-      <option value="quarta">Quarta</option>
-      <option value="quinta">Quinta</option>
-      <option value="sexta">Sexta</option>
-      <option value="sabado">Sabado</option>
-      <option value="domingo">Domingo</option>
-    </select>
-    <p></p>
-    </>
+        value=""
+        name="listaExclusaoSemana"
+        onChange={(evt) => {addExclusaoSemana(evt)} }
+      >
+        <option value="">Dia sem escala</option>
+        <option value="segunda">Segunda</option>
+        <option value="terça">Terça</option>
+        <option value="quarta">Quarta</option>
+        <option value="quinta">Quinta</option>
+        <option value="sexta">Sexta</option>
+        <option value="sabado">Sabado</option>
+        <option value="domingo">Domingo</option>
+      </select>
+      <p></p>
+    </div>
   );
 }
 

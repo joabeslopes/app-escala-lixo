@@ -56,10 +56,10 @@ export default function MainForm() {
 
   return (
     <>
+      <FiltroDatas diaInicial={diaInicial} setDiaInicial={setDiaInicial} listaExclusaoSemana={listaExclusaoSemana} setlistaExclusaoSemana={setlistaExclusaoSemana}  />
+      
       <form className="meu-form" onSubmit={handleSubmit}>
         <h1 className="form-title">Escala do lixo</h1>
-
-        <FiltroDatas diaInicial={diaInicial} setDiaInicial={setDiaInicial} listaExclusaoSemana={listaExclusaoSemana} setlistaExclusaoSemana={setlistaExclusaoSemana}  />
 
         <ListaPessoas listaPessoas={listaPessoas} setListaPessoas={setListaPessoas} />
 
