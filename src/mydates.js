@@ -1,10 +1,21 @@
 var defaultTimezone = 'T12:00:00.000-03:00';
 var anoGlobal, listaFeriados;
 
-export function getDiaPtBr(diaISO){
+function getLocaleString(diaISO, options){
   const d = new Date(diaISO+defaultTimezone);
-  const options = { year: 'numeric', month: 'numeric', day: 'numeric' };
   const diaString = d.toLocaleString("pt-br", options);
+  return diaString;
+}
+
+export function getDiaPtBr(diaISO){
+  const options = { year: 'numeric', month: 'numeric', day: 'numeric' };
+  const diaString = getLocaleString(diaISO, options);
+  return diaString;
+}
+
+export function getMesPtBr(diaISO){
+  const options = { month: 'long' };
+  const diaString = getLocaleString(diaISO, options);
   return diaString;
 }
 

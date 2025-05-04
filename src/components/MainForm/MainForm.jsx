@@ -66,7 +66,7 @@ export default function MainForm() {
         <button type="submit" className="submit">Gerar</button>
       </form>
 
-      <Escala escalaMes={escalaMes} />
+      <Escala diaInicial={diaInicial} escalaMes={escalaMes} />
     </>
   );
 }
