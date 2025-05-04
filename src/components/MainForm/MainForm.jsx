@@ -8,7 +8,7 @@ import { getDiaAtual } from "../../mydates";
 
 async function gerarEscalaFinal(dados, setEscalaMes) {
 
-  const escala = await gerarEscala(dados.diaInicial, dados.listaPessoas, dados.listaExclusaoSemana);
+  const escala = await gerarEscala(dados.diaInicial, dados.listaPessoas, dados.exclusaoSemana);
 
   if (typeof escala === "undefined"){
     alert('Erro ao gerar escala, corrija os dados e tente novamente')
@@ -27,7 +27,7 @@ export default function MainForm() {
 
   const [diaInicial, setDiaInicial] = useState(getDiaAtual());
 
-  const [listaExclusaoSemana, setlistaExclusaoSemana] = useState([]);
+  const [exclusaoSemana, setExclusaoSemana] = useState([]);
 
   const handleSubmit = async function (evt) {
 
@@ -45,7 +45,7 @@ export default function MainForm() {
       const dados = {
         listaPessoas: listaFiltrada,
         diaInicial: diaInicial,
-        listaExclusaoSemana: listaExclusaoSemana
+        exclusaoSemana: exclusaoSemana
       };
 
       await gerarEscalaFinal(dados, setEscalaMes);
@@ -56,7 +56,7 @@ export default function MainForm() {
 
   return (
     <>
-      <FiltroDatas diaInicial={diaInicial} setDiaInicial={setDiaInicial} listaExclusaoSemana={listaExclusaoSemana} setlistaExclusaoSemana={setlistaExclusaoSemana}  />
+      <FiltroDatas diaInicial={diaInicial} setDiaInicial={setDiaInicial} exclusaoSemana={exclusaoSemana} setExclusaoSemana={setExclusaoSemana}  />
       
       <form className="meu-form" onSubmit={handleSubmit}>
         <h1 className="form-title">Escala do lixo</h1>

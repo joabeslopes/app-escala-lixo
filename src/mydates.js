@@ -1,4 +1,4 @@
-var defaultTimezone = 'T12:00:00.000-03:00';
+export var defaultTimezone = 'T12:00:00.000-03:00';
 var anoGlobal, listaFeriados;
 
 function getLocaleString(diaISO, options){
@@ -61,11 +61,13 @@ async function getFeriados(ano){
   return lista;
 };
 
-export async function gerarListaMes(diaInicial, listaExclusaoSemana){
+export async function gerarListaMes(diaInicial, exclusaoSemana){
 
   const objDiaInicial = new Date(diaInicial+defaultTimezone);
   const ano = objDiaInicial.getFullYear();
   const mes = objDiaInicial.getMonth();
+  const listaExclusaoSemana = exclusaoSemana.map( (d) => getDiaIndex(d) );
+  const listaMes = [];
 
   if (ano !== anoGlobal){
     listaFeriados = await getFeriados(ano);
@@ -75,46 +77,18 @@ export async function gerarListaMes(diaInicial, listaExclusaoSemana){
     anoGlobal = ano;
   };
 
-  let listaMes = [];
-
   while ( objDiaInicial.getMonth() == mes ){
-    let semana = ['0','0','0','0','0','0','0'];
 
-    // preenche os dias da semana, ate completar ela 
-    while (semana[6] == '0'){
-      const diaISO = objDiaInicial.toISOString().split('T')[0];
-      const diaAtual = objDiaInicial.getDay();
-
-      semana[diaAtual] = diaISO;
-
-      // aumenta a data em 1 dia
-      objDiaInicial.setDate( objDiaInicial.getDate() + 1 );
-
-      // para de completar a semana se chegar no fim do mes
-      if (objDiaInicial.getMonth() != mes){
-        break;
-      };
+    const diaISO = objDiaInicial.toISOString().split('T')[0];
+    const diaAtual = objDiaInicial.getDay();
+    
+    // o dia nao é feriado e não está na exclusao da semana
+    if (!listaFeriados.includes(diaISO) && !listaExclusaoSemana.includes(diaAtual) ){
+      listaMes.push(diaISO);
     };
 
-    const exclusaoSemana = listaExclusaoSemana.map( (d) => getDiaIndex(d) );
-
-    // filtra os dias da semana
-    for (let i = 0; i < 7; i++ ){
-      const diaAtual = semana[i];
-      if (diaAtual != '0'){
-        const testeDia = new Date(diaAtual+defaultTimezone);
-        const diaAtualIndex = testeDia.getDay();
-        if (exclusaoSemana.includes(diaAtualIndex) || listaFeriados.includes(diaAtual) ) {
-          semana[i] = '0';
-        };
-      };
-    };
-
-    // acrescenta a semana se ela tiver dias uteis para a escala
-    if ( JSON.stringify(semana) != '["0","0","0","0","0","0","0"]'  ){
-      listaMes.push(semana);
-    };
-
+    // aumenta a data em 1 dia
+    objDiaInicial.setDate( objDiaInicial.getDate() + 1 );
   };
 
   return listaMes;

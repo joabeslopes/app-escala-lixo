@@ -13,13 +13,8 @@ export default function Escala({ diaInicial, escalaMes }) {
             <p className="output">
                 *Escala lixo {getMesPtBr(diaInicial)}*
                 <br/><br/>
-                {escalaMes.map( (semana) =>
-                    <>
-                        {semana.map( (dia) => 
-                            <DiaEscala dia={dia} />
-                        )}
-                        <br/>
-                    </>
+                {escalaMes.map( (dia) =>
+                    <DiaEscala dia={dia}/>
                 )}
             </p>
         </div>
