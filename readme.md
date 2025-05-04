@@ -28,4 +28,4 @@ Feito isso, só rodar:
 
 Vai por padrao rodar na porta 5000, só acessar http://localhost:5000
 
-Se quiser me ajudar a desenvolver o frontend, só instalar o node e rodar npm install, assim ele instala o webpack que foi o que usei pra gerar o javascript final.
+Se quiser me ajudar a desenvolver o frontend, só instalar o node e rodar npm install, assim ele instala o React que foi o que usei pra gerar o javascript final.
