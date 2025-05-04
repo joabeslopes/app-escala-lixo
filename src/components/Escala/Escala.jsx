@@ -1,5 +1,6 @@
 import "./Escala.css";
 import PropTypes from 'prop-types';
+import { getDiaPtBr } from "../../mydates";
 
 export default function Escala({ escalaMes }) {
 
@@ -7,17 +8,14 @@ export default function Escala({ escalaMes }) {
         return <></>
     };
 
-
     return (
         <div className="output-container">
             <p className="output">
                 {escalaMes.map( (semana) =>
                     <>
-                        {semana.map( (dia) => {
-                            const escalaString = dia.dia + " - " + dia.nome;
-                            return <> {escalaString} <br/> </>
-                        })}
-
+                        {semana.map( (dia) => 
+                            <DiaEscala dia={dia} />
+                        )}
                         <br/>
                     </>
                 )}
@@ -27,6 +25,19 @@ export default function Escala({ escalaMes }) {
 
 };
 
+function DiaEscala({dia}){
+
+    const escalaString = getDiaPtBr(dia.dia) + " - " + dia.nome;
+    return <> 
+        {escalaString} 
+        <br/> 
+    </>
+};
+
 Escala.propTypes = {
     escalaMes: PropTypes.array
+};
+
+DiaEscala.propTypes = {
+    dia: PropTypes.object
 };

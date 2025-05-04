@@ -1,12 +1,8 @@
 import PropTypes from 'prop-types';
 import "./FiltroDatas.css";
+import { getDiaAtual } from "../../mydates";
 
-export function getDiaAtual(){
-  const diaAtual = new Date().toISOString().split('T')[0];
-  return diaAtual;
-}
-
-export default function FiltroDatas({DiaInicial, setDiaInicial, listaExclusaoSemana, setlistaExclusaoSemana}) {
+export default function FiltroDatas({diaInicial, setDiaInicial, listaExclusaoSemana, setlistaExclusaoSemana}) {
 
   const diaAtual = getDiaAtual();
 
@@ -33,7 +29,7 @@ export default function FiltroDatas({DiaInicial, setDiaInicial, listaExclusaoSem
         required
         type="date"
         className="input"
-        value={DiaInicial}
+        value={diaInicial}
         min={diaAtual}
         onChange={(evt) => setDiaInicial(evt.target.value)} />
 
@@ -63,7 +59,7 @@ export default function FiltroDatas({DiaInicial, setDiaInicial, listaExclusaoSem
 }
 
 FiltroDatas.propTypes = {
-  DiaInicial: PropTypes.string,
+  diaInicial: PropTypes.string,
   setDiaInicial: PropTypes.func,
   listaExclusaoSemana: PropTypes.array,
   setlistaExclusaoSemana: PropTypes.func
