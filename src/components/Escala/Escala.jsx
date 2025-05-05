@@ -1,6 +1,7 @@
 import "./Escala.css";
 import PropTypes from 'prop-types';
 import { getDiaPtBr, getMesPtBr } from "../../mydates";
+import Integracao from "../Integracao/Integracao";
 
 export default function Escala({ diaInicial, escalaMes }) {
 
@@ -9,17 +10,19 @@ export default function Escala({ diaInicial, escalaMes }) {
     };
 
     return (
-        <div className="output-container">
-            <p className="output">
-                *Escala lixo {getMesPtBr(diaInicial)}*
-                <br/><br/>
-                {escalaMes.map( (dia) =>
-                    <DiaEscala dia={dia}/>
-                )}
-            </p>
-        </div>
+        <>
+            <div className="output-container">
+                <p className="output">
+                    *Escala lixo {getMesPtBr(diaInicial)}*
+                    <br/><br/>
+                    {escalaMes.map( (dia) =>
+                        <DiaEscala dia={dia}/>
+                    )}
+                </p>
+            </div>
+            <Integracao escalaMes={escalaMes} />
+        </>
     );
-
 };
 
 function DiaEscala({dia}){

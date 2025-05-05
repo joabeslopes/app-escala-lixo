@@ -8,10 +8,10 @@ import { getDiaAtual } from "../../mydates";
 
 async function gerarEscalaFinal(dados, setEscalaMes) {
 
-  const escala = await gerarEscala(dados.diaInicial, dados.listaPessoas, dados.exclusaoSemana);
+  const escala = await gerarEscala(dados.diaInicial, dados.exclusaoSemana, dados.listaPessoas);
 
   if (typeof escala === "undefined"){
-    alert('Erro ao gerar escala, corrija os dados e tente novamente')
+    alert('Erro ao gerar escala, verifique os dados e tente novamente')
   } else {
     setEscalaMes(escala);
   }

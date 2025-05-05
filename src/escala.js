@@ -1,6 +1,6 @@
 import {gerarListaMes, getDiaIndex, defaultTimezone} from './mydates';
 
-export default async function gerarEscala(diaInicial, listaPessoas, exclusaoSemana){
+export default async function gerarEscala(diaInicial, exclusaoSemana, listaPessoas){
 
     const listaMes = await gerarListaMes(diaInicial, exclusaoSemana);
     if ( typeof listaMes === "undefined" ){

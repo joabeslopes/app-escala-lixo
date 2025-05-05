@@ -1,3 +1,5 @@
+import {get} from "./myApiClient";
+
 export var defaultTimezone = 'T12:00:00.000-03:00';
 var anoGlobal, listaFeriados;
 
@@ -51,14 +53,14 @@ export function getDiaIndex(diaString){
 
 async function getFeriados(ano){
 
-  const protocol = window.location.protocol;
-  const hostname = window.location.hostname;
-  const apiUrl = protocol + '//' + hostname + ':5000' + '/api';
-  let lista = await fetch(apiUrl + "/listaFeriados?ano="+ano,
-                    ).then(response => response.json()
-                    ).then(response => response["listaFeriados"]
-                    ).catch(error => undefined);
-  return lista;
+  const response = await get("/listaFeriados?ano="+ano);
+
+  if (!response){
+    return undefined;
+  } else {
+    return response["listaFeriados"];
+  };
+
 };
 
 export async function gerarListaMes(diaInicial, exclusaoSemana){
