@@ -4,10 +4,11 @@ from dotenv import load_dotenv
 from myClasses import IntegracaoEscala
 
 load_dotenv()
-url: str = os.environ.get("SUPABASE_URL")
-key: str = os.environ.get("SUPABASE_KEY")
 
 def get_instance():
+    url: str = os.environ.get("SUPABASE_URL")
+    key: str = os.environ.get("SUPABASE_KEY")
+    
     try:
         supabase: Client = create_client(url, key)
         return supabase
@@ -17,7 +18,7 @@ def get_instance():
 
 def user_auth(supabase: Client, request: IntegracaoEscala):
     try:
-        user = supabase.auth.sign_in_with_password({ "email": request.email, "password": request.password })
+        supabase.auth.sign_in_with_password({ "email": request.email, "password": request.password })
         return True
     except Exception as e:
         print(f"Erro na validaçao do usuario: {str(e)}")
@@ -25,9 +26,17 @@ def user_auth(supabase: Client, request: IntegracaoEscala):
 
 def set_escala(supabase: Client, request: IntegracaoEscala):
     try:
-        user = supabase.auth.get_user()
+        supabase.auth.get_user()
     except Exception as e:
         print(f"Erro na validaçao do usuario: {str(e)}")
+        return False
+    
+    tabela_escala = os.environ.get("SUPABASE_TABELA_ESCALA")
+    
+    try:
+        supabase.table(tabela_escala).upsert(request.escala).execute()
+    except Exception as e:
+        print(f"Erro ao modificar escala: {str(e)}")
         return False
 
     return True
