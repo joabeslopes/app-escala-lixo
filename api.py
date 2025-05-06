@@ -11,7 +11,7 @@ app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
     allow_credentials=True,
-    allow_methods=["POST"],
+    allow_methods=["*"],
     allow_headers=["*"],
 )
 
@@ -28,15 +28,15 @@ async def get_lista_feriados(ano: int):
 async def post_integracao_escala(request: IntegracaoEscala):
     supabase = get_instance()
     if not supabase:
-        raise HTTPException(status_code=404, detail="Erro na conexão com o Supabase")
+        raise HTTPException(status_code=503, detail="Erro na conexão com o Supabase")
 
     success = user_auth(supabase, request)
     if not success:
-        raise HTTPException(status_code=404, detail="Usuário inválido")
+        raise HTTPException(status_code=401, detail="Usuário inválido")
 
     success = set_escala(supabase, request)
     if not success:
-        raise HTTPException(status_code=404, detail="Escala inválida")
+        raise HTTPException(status_code=400, detail="Escala inválida")
     
     return {"success": True}
 

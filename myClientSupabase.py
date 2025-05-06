@@ -25,16 +25,13 @@ def user_auth(supabase: Client, request: IntegracaoEscala):
         return False
 
 def set_escala(supabase: Client, request: IntegracaoEscala):
-    try:
-        supabase.auth.get_user()
-    except Exception as e:
-        print(f"Erro na validaçao do usuario: {str(e)}")
-        return False
     
     tabela_escala = os.environ.get("SUPABASE_TABELA_ESCALA")
+
+    request_escala = [ {"dia": dia.dia, "nome": dia.nome} for dia in request.escala ]
     
     try:
-        supabase.table(tabela_escala).upsert(request.escala).execute()
+        supabase.table(tabela_escala).upsert(request_escala).execute()
     except Exception as e:
         print(f"Erro ao modificar escala: {str(e)}")
         return False
