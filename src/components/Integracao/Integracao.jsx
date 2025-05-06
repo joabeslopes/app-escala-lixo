@@ -9,6 +9,10 @@ async function envioIntegracao (request) {
 
     const response = await post("/integracaoSupabase", jsonRequest);
 
+    if (typeof response === "undefined"){
+        return false;
+    };
+
     if (response["success"]){
         return true
     } else {
