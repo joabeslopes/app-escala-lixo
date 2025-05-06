@@ -3,7 +3,7 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.middleware.cors import CORSMiddleware
 from mydates import getListaFeriados
 from myClasses import IntegracaoEscala
-from myClientSupabase import get_instance, user_auth, set_escala
+from myClientSupabase import get_credentials
 
 app = FastAPI()
 
@@ -24,21 +24,9 @@ async def get_lista_feriados(ano: int):
 
     return {"listaFeriados": lista}
 
-@app.post("/integracaoSupabase")
-async def post_integracao_escala(request: IntegracaoEscala):
-    supabase = get_instance()
-    if not supabase:
-        raise HTTPException(status_code=503, detail="Erro na conexão com o Supabase")
-
-    success = user_auth(supabase, request)
-    if not success:
-        raise HTTPException(status_code=401, detail="Usuário inválido")
-
-    success = set_escala(supabase, request)
-    if not success:
-        raise HTTPException(status_code=400, detail="Escala inválida")
-    
-    return {"success": True}
+@app.get("/integracaoSupabase")
+async def get_integracao_escala():
+    return get_credentials()
 
 static = FastAPI()
 
