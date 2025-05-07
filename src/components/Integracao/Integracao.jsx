@@ -1,38 +1,7 @@
 import "./Integracao.css";
 import PropTypes from 'prop-types';
 import { useState } from "react";
-import { get } from "../../myApiClient";
-import { createClient } from "@supabase/supabase-js";
-
-var supabase;
-
-async function loadSupabase() {
-
-    if (typeof supabase === 'undefined'){
-        const apiInfo = await get('/integracaoSupabase');
-        supabase = createClient(apiInfo.url, apiInfo.key);
-    };
-}
-
-loadSupabase();
-
-async function envioIntegracao (request) {
-
-    if (typeof supabase === 'undefined'){
-        return false;
-    }
-
-    const { 'data':signinData, 'error':signinE } = await supabase.auth.signInWithPassword({ 'email': request.email, 'password': request.password });
-
-    if ( signinData.session === null){
-        return false;
-    };
-
-    supabase.auth.signOut();
-
-    return true;
-};
-
+import { envioIntegracao } from "../../myClientSupabase";
 
 export default function Integracao({escalaMes}) {
 
