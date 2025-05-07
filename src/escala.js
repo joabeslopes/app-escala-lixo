@@ -1,47 +1,36 @@
-import {gerarListaMes, getDiaIndex} from './mydates';
+import {gerarListaMes, getDiaIndex, defaultTimezone} from './mydates';
 
-export default async function gerarEscala(diaInicial, listaPessoas, listaExclusaoSemana){
+export default async function gerarEscala(diaInicial, exclusaoSemana, listaPessoas){
 
-    const listaMes = await gerarListaMes(diaInicial, listaExclusaoSemana);
+    const listaMes = await gerarListaMes(diaInicial, exclusaoSemana);
     if ( typeof listaMes === "undefined" ){
         return undefined;
     };
 
     let newListaPessoas = [...listaPessoas];
-    let newListaMes = [];
+    const newListaMes = [];
 
-    listaMes.forEach( (semana) => {
+    listaMes.forEach( (dia) => {
 
-        let newSemana = [];
-        for (let dia = 0; dia < 7; dia++){
-            // renova a lista de pessoas
-            if (newListaPessoas.length == 0){
-                newListaPessoas = [...listaPessoas];
-            };
-
-            if (semana[dia] != '0' ){
-                // tenta gerar a escala uma vez
-                let escalaDia = geraEscalaDia(dia, semana, newListaPessoas);
-
-                // caso nao funcione, extende a lista e tenta de novo
-                if (typeof escalaDia === "undefined"){
-
-                    newListaPessoas = [
-                        ...newListaPessoas,
-                        ...listaPessoas
-                    ];
-                    escalaDia = geraEscalaDia(dia, semana, newListaPessoas);
-                };
-
-                // se funcionar faz o push, se nao ignora e vai para o proximo dia
-                if (typeof escalaDia !== "undefined"){
-                    newSemana.push(escalaDia);
-                };
-            };
+        if (newListaPessoas.length == 0){
+            newListaPessoas = [...listaPessoas];
         };
 
-        if (JSON.stringify(newSemana) !== '[]' ){
-            newListaMes.push(newSemana);
+        let escalaDia = geraEscalaDia(dia, newListaPessoas);
+
+        // caso nao funcione, extende a lista e tenta de novo
+        if (typeof escalaDia === "undefined"){
+
+            newListaPessoas = [
+                ...newListaPessoas,
+                ...listaPessoas
+            ];
+            escalaDia = geraEscalaDia(dia, newListaPessoas);
+        };
+
+        // se funcionar faz o push, se nao ignora e vai para o proximo dia
+        if (typeof escalaDia !== "undefined"){
+            newListaMes.push(escalaDia);
         };
 
     });
@@ -49,18 +38,18 @@ export default async function gerarEscala(diaInicial, listaPessoas, listaExclusa
     return newListaMes;
 };
 
-
-function geraEscalaDia(diaIdx, semana, listaPessoas){
+function geraEscalaDia(dia, listaPessoas){
 
     let escalaDia;
-    const diaString = semana[diaIdx];
+    const d = new Date(dia+defaultTimezone);
+    const diaIdx = d.getDay();
 
     for (let pessoaIdx = 0; pessoaIdx < listaPessoas.length; pessoaIdx++ ){
         const pessoa = listaPessoas[pessoaIdx];
         const diaHomeIndex = getDiaIndex(pessoa.homeOffice);
         // se a pessoa nao estiver de home office, coloca ela na escala e tira ela da fila
         if (diaHomeIndex != diaIdx){
-            escalaDia = {   "dia": diaString,
+            escalaDia = {   "dia": dia,
                             "nome": pessoa.nome
             };
             listaPessoas.splice(pessoaIdx, 1);

@@ -10,4 +10,5 @@ body {
     --div-width-default: 450px;
     --div-width-mobile: 350px;
     --div-margin-bottom: 20px;
+    --div-margin-top: 20px;
 }

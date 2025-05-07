@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import "./FiltroDatas.css";
 import { getDiaAtual } from "../../mydates";
 
-export default function FiltroDatas({diaInicial, setDiaInicial, listaExclusaoSemana, setlistaExclusaoSemana}) {
+export default function FiltroDatas({diaInicial, setDiaInicial, exclusaoSemana, setExclusaoSemana}) {
 
   const diaAtual = getDiaAtual();
 
@@ -13,12 +13,12 @@ export default function FiltroDatas({diaInicial, setDiaInicial, listaExclusaoSem
       return true;
     };
 
-    if (listaExclusaoSemana.includes(dia) ){
-      const newLista = listaExclusaoSemana.filter( (diaExclusao) => diaExclusao != dia );
-      setlistaExclusaoSemana(newLista);
+    if (exclusaoSemana.includes(dia) ){
+      const newLista = exclusaoSemana.filter( (diaExclusao) => diaExclusao != dia );
+      setExclusaoSemana(newLista);
     } else {
-      const newLista = listaExclusaoSemana.concat( dia );
-      setlistaExclusaoSemana(newLista);
+      const newLista = exclusaoSemana.concat( dia );
+      setExclusaoSemana(newLista);
     };
   };
 
@@ -35,13 +35,13 @@ export default function FiltroDatas({diaInicial, setDiaInicial, listaExclusaoSem
 
       <h2>Dias da semana sem escala</h2>
       {
-        listaExclusaoSemana.map( (dia) => <a>* {dia}</a> )
+        exclusaoSemana.map( (dia) => <a>* {dia}</a> )
       }
 
       <select
         className="input"
         value=""
-        name="listaExclusaoSemana"
+        name="exclusaoSemana"
         onChange={(evt) => {addExclusaoSemana(evt)} }
       >
         <option value="">Dia sem escala</option>
@@ -61,6 +61,6 @@ export default function FiltroDatas({diaInicial, setDiaInicial, listaExclusaoSem
 FiltroDatas.propTypes = {
   diaInicial: PropTypes.string,
   setDiaInicial: PropTypes.func,
-  listaExclusaoSemana: PropTypes.array,
-  setlistaExclusaoSemana: PropTypes.func
+  exclusaoSemana: PropTypes.array,
+  setExclusaoSemana: PropTypes.func
 };

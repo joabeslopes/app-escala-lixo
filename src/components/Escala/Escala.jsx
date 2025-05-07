@@ -1,28 +1,28 @@
 import "./Escala.css";
 import PropTypes from 'prop-types';
-import { getDiaPtBr } from "../../mydates";
+import { getDiaPtBr, getMesPtBr } from "../../mydates";
+import Integracao from "../Integracao/Integracao";
 
-export default function Escala({ escalaMes }) {
+export default function Escala({ diaInicial, escalaMes }) {
 
     if (escalaMes.length === 0){
         return <></>
     };
 
     return (
-        <div className="output-container">
-            <p className="output">
-                {escalaMes.map( (semana) =>
-                    <>
-                        {semana.map( (dia) => 
-                            <DiaEscala dia={dia} />
-                        )}
-                        <br/>
-                    </>
-                )}
-            </p>
-        </div>
+        <>
+            <div className="output-container">
+                <p className="output">
+                    *Escala lixo {getMesPtBr(diaInicial)}*
+                    <br/><br/>
+                    {escalaMes.map( (dia) =>
+                        <DiaEscala dia={dia}/>
+                    )}
+                </p>
+            </div>
+            <Integracao escalaMes={escalaMes} />
+        </>
     );
-
 };
 
 function DiaEscala({dia}){
@@ -35,6 +35,7 @@ function DiaEscala({dia}){
 };
 
 Escala.propTypes = {
+    diaInicial: PropTypes.string,
     escalaMes: PropTypes.array
 };
 
