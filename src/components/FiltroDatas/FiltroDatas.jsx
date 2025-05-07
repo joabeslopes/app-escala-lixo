@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import "./FiltroDatas.css";
-import { getDiaAtual } from "../../mydates";
+import { getDiaAtual } from "../../myDates";
 
 export default function FiltroDatas({diaInicial, setDiaInicial, exclusaoSemana, setExclusaoSemana}) {
 

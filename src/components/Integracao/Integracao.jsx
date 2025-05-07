@@ -1,26 +1,7 @@
 import "./Integracao.css";
 import PropTypes from 'prop-types';
 import { useState } from "react";
-import { post } from "../../myApiClient";
-
-async function envioIntegracao (request) {
-
-    const jsonRequest = JSON.stringify(request);
-
-    const response = await post("/integracaoSupabase", jsonRequest);
-
-    if (typeof response === "undefined"){
-        return false;
-    };
-
-    if (response["success"]){
-        return true
-    } else {
-        return false
-    };
-
-};
-
+import { envioIntegracao } from "../../myClientSupabase";
 
 export default function Integracao({escalaMes}) {
 

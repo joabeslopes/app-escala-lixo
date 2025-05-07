@@ -4,7 +4,7 @@ import ListaPessoas from "../ListaPessoas/ListaPessoas";
 import Escala from "../Escala/Escala";
 import FiltroDatas from "../FiltroDatas/FiltroDatas";
 import gerarEscala from "../../escala";
-import { getDiaAtual } from "../../mydates";
+import { getDiaAtual } from "../../myDates";
 
 async function gerarEscalaFinal(dados, setEscalaMes) {
 

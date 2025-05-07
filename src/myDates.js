@@ -1,6 +1,7 @@
-import {get} from "./myApiClient";
+import {get} from "./myClientPython";
 
 export var defaultTimezone = 'T12:00:00.000-03:00';
+var defaultTimezoneOffset = 180;
 var anoGlobal, listaFeriados;
 
 function getLocaleString(diaISO, options){
@@ -23,8 +24,8 @@ export function getMesPtBr(diaISO){
 
 export function getDiaAtual(){
   const diaUser = new Date();
-  // atualiza com o Timezone do usuario para pegar a string ISO no dia correto
-  diaUser.setMinutes( diaUser.getMinutes() - diaUser.getTimezoneOffset() );
+  // atualiza com o timezone default para pegar a string ISO no dia correto
+  diaUser.setMinutes( diaUser.getMinutes() - defaultTimezoneOffset );
 
   const diaAtual = diaUser.toISOString().split('T')[0];
   return diaAtual;

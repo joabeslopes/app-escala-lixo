@@ -1,4 +1,4 @@
-import {gerarListaMes, getDiaIndex, defaultTimezone} from './mydates';
+import {gerarListaMes, getDiaIndex, defaultTimezone} from './myDates';
 
 export default async function gerarEscala(diaInicial, exclusaoSemana, listaPessoas){
 

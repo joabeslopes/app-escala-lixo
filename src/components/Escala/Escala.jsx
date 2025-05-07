@@ -1,6 +1,6 @@
 import "./Escala.css";
 import PropTypes from 'prop-types';
-import { getDiaPtBr, getMesPtBr } from "../../mydates";
+import { getDiaPtBr, getMesPtBr } from "../../myDates";
 import Integracao from "../Integracao/Integracao";
 
 export default function Escala({ diaInicial, escalaMes }) {
