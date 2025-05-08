@@ -30,7 +30,6 @@ export default function FiltroDatas({diaInicial, setDiaInicial, exclusaoSemana, 
           type="date"
           className="input"
           value={diaInicial}
-          min={diaAtual}
           onChange={(evt) => setDiaInicial(evt.target.value)} />
 
       <h2>Dias da semana sem escala</h2>
