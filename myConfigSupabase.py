@@ -7,10 +7,10 @@ def getConfig():
     url = os.environ.get("SUPABASE_URL")
     key = os.environ.get("SUPABASE_KEY")
     tabela_escala = os.environ.get("SUPABASE_TABELA_ESCALA")
-    tabela_duplas = os.environ.get("SUPABASE_TABELA_DUPLAS")
+    tabela_pessoas = os.environ.get("SUPABASE_TABELA_PESSOAS")
 
     return {'url':url, 
             'key':key, 
             'tabela_escala':tabela_escala,
-            'tabela_duplas': tabela_duplas
+            'tabela_pessoas': tabela_pessoas
             }

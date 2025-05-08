@@ -1,9 +1,0 @@
-.success {
-    color: greenyellow;
-    margin-top: var(--div-margin-top);
-}
-
-.error {
-    color: red;
-    margin-top: var(--div-margin-top);
-}
