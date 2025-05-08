@@ -4,6 +4,7 @@ import ListaPessoas from "../ListaPessoas/ListaPessoas";
 import Escala from "../Escala/Escala";
 import FiltroDatas from "../FiltroDatas/FiltroDatas";
 import gerarEscala from "../../escala";
+import Integracao from "../Integracao/Integracao";
 import { getDiaAtual } from "../../myDates";
 
 async function gerarEscalaFinal(dados, setEscalaMes) {
@@ -56,6 +57,8 @@ export default function MainForm() {
 
   return (
     <>
+      <Integracao escalaMes={escalaMes} listaPessoas={listaPessoas} setListaPessoas={setListaPessoas} />
+
       <FiltroDatas diaInicial={diaInicial} setDiaInicial={setDiaInicial} exclusaoSemana={exclusaoSemana} setExclusaoSemana={setExclusaoSemana}  />
       
       <form className="meu-form" onSubmit={handleSubmit}>
