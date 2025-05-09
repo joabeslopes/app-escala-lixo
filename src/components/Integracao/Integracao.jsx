@@ -10,16 +10,26 @@ export default function Integracao({escalaMes, listaPessoas, setListaPessoas}) {
 
     const [userLogged, setUserLogged] = useState(undefined);
     const [apiLoaded, setApiLoaded] = useState(false);
-    const [resultStatus, setResultStatus] = useState(undefined);
-    const [resultText, setResultText] = useState('');
+    const [resultMessage, setResultMessage] = useState(undefined);
+
+    const setMessage = function(status, text) {
+        const message = {
+            'status': status,
+            'text': text
+        };
+        setResultMessage(message);
+    };
 
     useEffect(() => {
         const get_session = async function () {
             const loaded = await clientSupabase.load();
-
             setApiLoaded(loaded);
-            setResultStatus(loaded ? undefined : false);
-            setResultText(loaded ? '' : 'Não foi possível se conectar à integração');
+
+            if (!loaded){
+                setMessage('error', 'Conexão com a integração');
+            } else {
+                setResultMessage(undefined);
+            };
 
             const hasSession = await clientSupabase.getSession();
             setUserLogged(hasSession);
@@ -33,19 +43,19 @@ export default function Integracao({escalaMes, listaPessoas, setListaPessoas}) {
 
         {apiLoaded ?
             <>
-                <LoginForm userLogged={userLogged} setUserLogged={setUserLogged} setResultStatus={setResultStatus} setResultText={setResultText} />
-                <EnvioPessoas userLogged={userLogged} setListaPessoas={setListaPessoas} setResultStatus={setResultStatus} setResultText={setResultText} />
-                <EnvioEscala userLogged={userLogged} escalaMes={escalaMes} setResultStatus={setResultStatus} setResultText={setResultText} />
+                <LoginForm userLogged={userLogged} setUserLogged={setUserLogged} setMessage={setMessage} />
+                <EnvioPessoas userLogged={userLogged} setListaPessoas={setListaPessoas} setMessage={setMessage} />
+                <EnvioEscala userLogged={userLogged} escalaMes={escalaMes} setMessage={setMessage} />
             </>
             :
             null
         }
-        <Result status={resultStatus} text={resultText} />
+        <Result messageObj={resultMessage} />
     </div>
 };
 
 
-function LoginForm({userLogged, setUserLogged, setResultStatus, setResultText}){
+function LoginForm({userLogged, setUserLogged, setMessage}){
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -55,15 +65,25 @@ function LoginForm({userLogged, setUserLogged, setResultStatus, setResultText}){
 
         const userData = { email, password };
         const loginSuccess = await clientSupabase.login(userData);
-        setResultStatus(loginSuccess);
-        setResultText(loginSuccess ? 'Login efetuado' : 'Dados de login invalidos');
+
+        if (loginSuccess){
+            setMessage('success', 'Login efetuado')
+        } else {
+            setMessage('error', 'Dados de login invalidos')
+        };
         setUserLogged(loginSuccess);
+
     };
 
     const handleLogout = async function () {
         const logoutSuccess = await clientSupabase.logout();
-        setResultStatus(logoutSuccess);
-        setResultText(logoutSuccess ? 'Logout efetuado' : 'Nao foi possivel fazer o logout');
+
+        if (logoutSuccess){
+            setMessage('success', 'Logout efetuado')
+        } else {
+            setMessage('error', 'Nao foi possivel fazer o logout')
+        };
+
         setUserLogged(!logoutSuccess);
     };
 
@@ -102,12 +122,16 @@ function LoginForm({userLogged, setUserLogged, setResultStatus, setResultText}){
 };
 
 
-function EnvioEscala({userLogged, escalaMes, setResultStatus, setResultText}){
+function EnvioEscala({userLogged, escalaMes, setMessage}){
 
     const handleSubmit = async function () {
         const envioSuccess = await clientSupabase.envioEscala(escalaMes);
-        setResultStatus(envioSuccess);
-        setResultText( envioSuccess ? 'Escala enviada' : 'Nao foi possivel enviar a escala' );
+
+        if (envioSuccess){
+            setMessage('success', 'Escala enviada')
+        } else {
+            setMessage('error', 'Nao foi possivel enviar a escala')
+        };
     };
 
     if (typeof userLogged === "undefined" || !userLogged){
@@ -122,7 +146,7 @@ function EnvioEscala({userLogged, escalaMes, setResultStatus, setResultText}){
 };
 
 
-function EnvioPessoas({userLogged, setListaPessoas, setResultStatus, setResultText}){
+function EnvioPessoas({userLogged, setListaPessoas, setMessage}){
 
     const handleSubmit = async function () {
 
@@ -131,10 +155,10 @@ function EnvioPessoas({userLogged, setListaPessoas, setResultStatus, setResultTe
 
         if (sucesso && lista.length > 0){
             setListaPessoas(lista)
+            setMessage('success', 'Obteve lista de pessoas')
+        } else {
+            setMessage('error', 'Nao obteve lista de pessoas')
         };
-
-        setResultStatus(sucesso);
-        setResultText(sucesso ? 'Buscou lista de pessoas' : 'Nao buscou lista de pessoas');
     };
 
     if (typeof userLogged === "undefined" || !userLogged){
