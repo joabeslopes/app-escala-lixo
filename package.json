@@ -1,7 +1,7 @@
 {
   "name": "app-escala-lixo",
   "private": true,
-  "version": "2.0",
+  "version": "2.1",
   "type": "module",
   "scripts": {
     "dev": "vite --host",
@@ -10,14 +10,11 @@
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.49.4",
-    "prop-types": "^15.8.1",
-    "react": "^18.3.1",
-    "react-dom": "^18.3.1",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
     "uuid": "^11.0.5"
   },
   "devDependencies": {
-    "@types/react": "^18.3.18",
-    "@types/react-dom": "^18.3.5",
     "@vitejs/plugin-react": "^4.3.4",
     "globals": "^15.14.0",
     "vite": "^6.0.5"

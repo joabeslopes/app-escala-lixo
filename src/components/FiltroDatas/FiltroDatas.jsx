@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import "./FiltroDatas.css";
 import { getDiaAtual } from "../../myDates";
 
@@ -56,11 +55,4 @@ export default function FiltroDatas({diaInicial, setDiaInicial, exclusaoSemana, 
       <p></p>
     </div>
   );
-}
-
-FiltroDatas.propTypes = {
-  diaInicial: PropTypes.string,
-  setDiaInicial: PropTypes.func,
-  exclusaoSemana: PropTypes.array,
-  setExclusaoSemana: PropTypes.func
 };

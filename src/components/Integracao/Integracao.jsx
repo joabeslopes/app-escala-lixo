@@ -1,5 +1,4 @@
 import "./Integracao.css";
-import PropTypes from 'prop-types';
 import { useState } from "react";
 import { envioIntegracao } from "../../myClientSupabase";
 
@@ -25,7 +24,7 @@ export default function Integracao({escalaMes}) {
 
     return <>
         <form className="meu-form" onSubmit={handleSubmit}>
-            <h1 className="form-title">Enviar para Integracao</h1>
+            <h2 className="form-title">Enviar para Integracao</h2>
 
             <input
                 required
@@ -65,12 +64,4 @@ function Result({success}){
         };
     };
 
-}
-
-Integracao.propTypes = {
-    escalaMes: PropTypes.array
-};
-
-Result.propTypes = {
-    success: PropTypes.bool
 };

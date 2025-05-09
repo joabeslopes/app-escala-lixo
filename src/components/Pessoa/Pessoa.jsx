@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import "./Pessoa.css";
 
 export default function Pessoa({pessoa, index, listaPessoas, setListaPessoas}) {
@@ -50,16 +49,4 @@ export default function Pessoa({pessoa, index, listaPessoas, setListaPessoas}) {
         </>
     );
 
-}
-
-
-Pessoa.propTypes = {
-    pessoa: PropTypes.exact( {
-        nome: PropTypes.string,
-        homeOffice: PropTypes.string,
-        id: PropTypes.string
-    } ),
-    index: PropTypes.number,
-    listaPessoas: PropTypes.array , 
-    setListaPessoas: PropTypes.func
 };
