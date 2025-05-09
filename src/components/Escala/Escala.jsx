@@ -1,5 +1,4 @@
 import "./Escala.css";
-import PropTypes from 'prop-types';
 import { getDiaPtBr, getMesPtBr } from "../../myDates";
 import Integracao from "../Integracao/Integracao";
 
@@ -32,13 +31,4 @@ function DiaEscala({dia}){
         {escalaString} 
         <br/> 
     </>
-};
-
-Escala.propTypes = {
-    diaInicial: PropTypes.string,
-    escalaMes: PropTypes.array
-};
-
-DiaEscala.propTypes = {
-    dia: PropTypes.object
 };
