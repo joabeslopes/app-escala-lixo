@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import Pessoa from "../Pessoa/Pessoa";
 import "./ListaPessoas.css";
 import { v4 as uuidv4 } from 'uuid';
@@ -30,9 +29,4 @@ export default function ListaPessoas({listaPessoas, setListaPessoas}){
     </div>
   );
 
-}
-
-ListaPessoas.propTypes = {
-    listaPessoas: PropTypes.array ,
-    setListaPessoas: PropTypes.func
 };

@@ -1,5 +1,4 @@
 import "./Integracao.css";
-import PropTypes from 'prop-types';
 import { useState, useEffect } from "react";
 import myClientSupabase from "../../myClientSupabase";
 import Result from "../Result/Result";
@@ -166,10 +165,4 @@ function EnvioPessoas({userLogged, setListaPessoas, setMessage}){
     };
 
     return <button className="submit" onClick={handleSubmit}>Buscar lista de pessoas</button>
-};
-
-Integracao.propTypes = {
-    escalaMes: PropTypes.array,
-    listaPessoas: PropTypes.array,
-    setListaPessoas: PropTypes.func
 };

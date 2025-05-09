@@ -1,5 +1,4 @@
 import './Result.css';
-import PropTypes from 'prop-types';
 
 export default function Result({messageObj}){
 
@@ -22,8 +21,4 @@ export default function Result({messageObj}){
     const message = statusDict[status] + text;
 
     return <a className={status}>{message}</a>
-};
-
-Result.propTypes = {
-    messageObj: PropTypes.object
 };
