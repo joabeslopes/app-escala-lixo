@@ -1,5 +1,3 @@
-import {get} from "./myClientPython";
-
 export var defaultTimezone = 'T12:00:00.000-03:00';
 var defaultTimezoneOffset = 180;
 var anoGlobal, listaFeriados;
@@ -54,12 +52,15 @@ export function getDiaIndex(diaString){
 
 async function getFeriados(ano){
 
-  const response = await get("/listaFeriados?ano="+ano);
+  const response = await fetch('https://brasilapi.com.br/api/feriados/v1/'+ano,
+  ).then(r => r.json()
+  ).catch(error => undefined);
 
   if (!response){
     return undefined;
   } else {
-    return response["listaFeriados"];
+    const listaFeriados = response.map( feriado => feriado.date )
+    return listaFeriados;
   };
 
 };
