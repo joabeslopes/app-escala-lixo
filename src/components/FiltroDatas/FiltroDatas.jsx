@@ -1,48 +1,50 @@
 import "./FiltroDatas.css";
 import { getDiaAtual } from "../../myDates";
+import { useState } from "react";
 
-export default function FiltroDatas({diaInicial, setDiaInicial, exclusaoSemana, setExclusaoSemana}) {
+export default function FiltroDatas({setDiaMes, setdiaSemana}) {
 
-  const diaAtual = getDiaAtual();
+  const [internalDiaMes, setInternalDiaMes] = useState(getDiaAtual());
 
-  function addExclusaoSemana(evt){
+  const [internalDiaSemana, setInternalDiaSemana] = useState("");
+
+  const changeDiaMes = function (evt) {
     const dia = evt.target.value;
-
-    if (dia == ""){
-      return true;
+    if (dia === ""){
+      return null;
     };
+    setInternalDiaMes(dia);
+    setDiaMes(dia);
+  };
 
-    if (exclusaoSemana.includes(dia) ){
-      const newLista = exclusaoSemana.filter( (diaExclusao) => diaExclusao != dia );
-      setExclusaoSemana(newLista);
-    } else {
-      const newLista = exclusaoSemana.concat( dia );
-      setExclusaoSemana(newLista);
+  const changeDiaSemana = function (evt) {
+    const dia = evt.target.value;
+    if (dia === ""){
+      return null;
     };
+    setInternalDiaSemana(dia);
+    setdiaSemana(dia);
   };
 
   return (
-    <div className='filtro-datas'>
-      <h2>A partir de</h2>
+    <div>
+      <h2>Dia do mes</h2>
         <input 
-          required
-          type="date"
+          name="diaMes"
           className="input"
-          value={diaInicial}
-          onChange={(evt) => setDiaInicial(evt.target.value)} />
-
-      <h2>Dias da semana sem escala</h2>
-      {
-        exclusaoSemana.map( (dia) => <a>* {dia}</a> )
-      }
+          type="date"
+          value={internalDiaMes}
+          onChange={changeDiaMes} />
 
       <select
+        name="diaSemana"
         className="input"
-        value=""
-        name="exclusaoSemana"
-        onChange={(evt) => {addExclusaoSemana(evt)} }
+        value={internalDiaSemana}
+        onClick={() => setInternalDiaSemana("")}
+        onChange={changeDiaSemana}
       >
-        <option value="">Dia sem escala</option>
+        <option value="">Dia da semana</option>
+        <option value="nenhum">Nenhum</option>
         <option value="segunda">Segunda</option>
         <option value="terça">Terça</option>
         <option value="quarta">Quarta</option>
