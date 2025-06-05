@@ -1,11 +1,13 @@
 import "./Escala.css";
 import { getDiaPtBr, getMesPtBr } from "../../myDates";
 
-export default function Escala({ diaInicial, escalaMes }) {
+export default function Escala({ escalaMes }) {
 
     if (escalaMes.length === 0){
         return <></>
     };
+
+    const diaInicial = escalaMes[0].dia;
 
     return (
         <div className="output-container">

@@ -40,3 +40,9 @@
 .submit:active {
     background-color: #06b;
 }
+
+a {
+    color: gold;
+    font-family: sans-serif;
+    font-size: 20px;
+}

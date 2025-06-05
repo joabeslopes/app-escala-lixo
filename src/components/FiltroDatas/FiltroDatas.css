@@ -16,27 +16,3 @@ h2 {
     height: 30px;
     margin-top: 20px;
 }
-
-a {
-    color: gold;
-    font-family: sans-serif;
-    font-size: 20px;
-}
-
-.filtro-datas {
-    background-color: #15172b;
-    border-radius: 20px;
-    box-sizing: border-box;
-    padding: 20px;
-    width: var(--div-width-default);
-    display: flex;
-    flex-direction: column;
-    height: auto;
-    margin-bottom: var(--div-margin-bottom);
-}
-
-@media (max-width : 1024px) {
-    .filtro-datas {
-        width: var(--div-width-mobile);
-    }
-}

@@ -30,6 +30,17 @@ export default function MainForm() {
 
   const [exclusaoSemana, setExclusaoSemana] = useState([]);
 
+  const addDiaSemana = function (dia) {
+
+    if (exclusaoSemana.includes(dia) ){
+      const newLista = exclusaoSemana.filter( (diaExclusao) => diaExclusao != dia );
+      setExclusaoSemana(newLista);
+    } else {
+      const newLista = exclusaoSemana.concat( dia );
+      setExclusaoSemana(newLista);
+    };
+  };
+
   const handleSubmit = async function (evt) {
 
     evt.preventDefault();
@@ -59,8 +70,14 @@ export default function MainForm() {
     <>
       <Integracao escalaMes={escalaMes} listaPessoas={listaPessoas} setListaPessoas={setListaPessoas} />
 
-      <FiltroDatas diaInicial={diaInicial} setDiaInicial={setDiaInicial} exclusaoSemana={exclusaoSemana} setExclusaoSemana={setExclusaoSemana}  />
-      
+      <div className="meu-form">
+        <FiltroDatas setDiaMes={setDiaInicial} setdiaSemana={addDiaSemana}  />
+        <h2>Dias da semana sem escala</h2>
+        {
+          exclusaoSemana.map( (dia) => <a>* {dia}</a> )
+        }
+      </div>
+
       <form className="meu-form" onSubmit={handleSubmit}>
         <h2 className="form-title">Escala do lixo</h2>
 
@@ -69,7 +86,7 @@ export default function MainForm() {
         <button type="submit" className="submit">Gerar</button>
       </form>
 
-      <Escala diaInicial={diaInicial} escalaMes={escalaMes} />
+      <Escala escalaMes={escalaMes} />
     </>
   );
 }
