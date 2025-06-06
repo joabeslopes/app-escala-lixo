@@ -3,12 +3,3 @@ label {
     font-family: sans-serif;
     font-weight: bold;
 }
-
-.filtroDatas{
-    margin-top: 10px;
-    display: flex;
-    flex-direction: column;
-    align-items: start;
-    width: 100%;
-    height: auto;
-}
