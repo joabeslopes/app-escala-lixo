@@ -1,21 +1,3 @@
-.output-container {
-    background-color: #15172b;
-    border-radius: 20px;
-    box-sizing: border-box;
-    padding: 20px;
-    width: var(--div-width-default);
-    display: flex;
-    flex-direction: column;
-    height: auto;
-    margin-bottom: var(--div-margin-bottom);
-}
-
-@media (max-width : 1024px) {
-    .output-container {
-        width: var(--div-width-mobile);
-    }
-}
-
 .output {
     background-color: #303245;
     color: #eee;
@@ -27,4 +9,5 @@
     padding: 5px;
     margin-top: 5px;
     margin-bottom: 5px;
+    width: 100%;
 }

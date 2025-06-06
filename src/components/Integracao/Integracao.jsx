@@ -38,8 +38,8 @@ export default function Integracao({escalaMes, listaPessoas, setListaPessoas}) {
         get_session();
     }, []);
 
-    return <div className="meu-form">
-        <h1 className="form-title">Integracao</h1>
+    return <div className="external-div">
+        <h1 className="title">Integracao</h1>
 
         {apiLoaded ?
             <>

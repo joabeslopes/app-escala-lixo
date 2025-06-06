@@ -53,8 +53,8 @@ export default function MainForm() {
     <>
       <Integracao escalaMes={escalaMes} listaPessoas={listaPessoas} setListaPessoas={setListaPessoas} />
 
-      <div className="meu-form">
-        <h2 className="form-title">Dia inicial</h2>
+      <div className="external-div">
+        <h2 className="title">Dia inicial</h2>
         <input 
           name="diaInicial"
           className="input"
@@ -62,7 +62,7 @@ export default function MainForm() {
           value={diaInicial}
           onChange={(evt) => setDiaInicial(evt.target.value)} />
 
-        <h2 className="form-title">Ignorar feriados</h2>
+        <h2 className="title">Ignorar feriados</h2>
         <input 
           name="ignoraFeriados"
           className="checkbox"
@@ -70,13 +70,13 @@ export default function MainForm() {
           onChange={() => setIgnoraFeriados(!ignoraFeriados) }
           />
 
-        <h2 className="form-title">Dias sem escala</h2>
+        <h2 className="title">Dias sem escala</h2>
         <FiltroDatas listaDiasMes={diasMes} setListaDiasMes={setDiasMes} listaDiasSemana={diasSemana} setListaDiasSemana={setDiasSemana} />
 
       </div>
 
-      <form className="meu-form" onSubmit={handleSubmit}>
-        <h2 className="form-title">Pessoas/Grupos</h2>
+      <form className="external-div" onSubmit={handleSubmit}>
+        <h2 className="title">Pessoas/Grupos</h2>
 
         <ListaPessoas listaPessoas={listaPessoas} setListaPessoas={setListaPessoas} />
 
