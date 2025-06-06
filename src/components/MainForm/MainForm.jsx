@@ -5,7 +5,6 @@ import Escala from "../Escala/Escala";
 import FiltroDatas from "../FiltroDatas/FiltroDatas";
 import gerarEscala from "../../escala";
 import Integracao from "../Integracao/Integracao";
-import { getDiaAtual } from "../../myDates";
 
 async function gerarEscalaFinal(dados, setEscalaMes) {
 
@@ -22,47 +21,36 @@ async function gerarEscalaFinal(dados, setEscalaMes) {
 
 export default function MainForm() {
 
-  const [listaPessoas, setListaPessoas] = useState([{ nome: '', homeOffice: '', id: '' }]);
+  const [listaPessoas, setListaPessoas] = useState([{ id: '', nome: '', listaSemana: [], listaMes: [] }]);
 
   const [escalaMes, setEscalaMes] = useState([]);
 
-  const [diaInicial, setDiaInicial] = useState(getDiaAtual());
+  const [diasMes, setDiasMes] = useState([]);
 
-  const [exclusaoSemana, setExclusaoSemana] = useState([]);
-
-  const addDiaSemana = function (dia) {
-
-    if (exclusaoSemana.includes(dia) ){
-      const newLista = exclusaoSemana.filter( (diaExclusao) => diaExclusao != dia );
-      setExclusaoSemana(newLista);
-    } else {
-      const newLista = exclusaoSemana.concat( dia );
-      setExclusaoSemana(newLista);
-    };
-  };
+  const [diasSemana, setDiasSemana] = useState([]);
 
   const handleSubmit = async function (evt) {
 
     evt.preventDefault();
 
-    if (listaPessoas.length > 0) {
-
-      const listaFiltrada = listaPessoas.map((pessoa) => {
-        return {
-          nome: pessoa.nome,
-          homeOffice: pessoa.homeOffice,
-        }
-      });
-
-      const dados = {
-        listaPessoas: listaFiltrada,
-        diaInicial: diaInicial,
-        exclusaoSemana: exclusaoSemana
-      };
-
-      await gerarEscalaFinal(dados, setEscalaMes);
-
+    if (listaPessoas.length == 0) {
+      return null;
     };
+
+    const listaFiltrada = listaPessoas.map((pessoa) => {
+      return {
+        nome: pessoa.nome,
+        homeOffice: pessoa.listaSemana[0],
+      }
+    });
+
+    const dados = {
+      listaPessoas: listaFiltrada,
+      diaInicial: diasMes[0],
+      exclusaoSemana: [...diasSemana]
+    };
+
+    await gerarEscalaFinal(dados, setEscalaMes);
 
   };
 
@@ -71,11 +59,7 @@ export default function MainForm() {
       <Integracao escalaMes={escalaMes} listaPessoas={listaPessoas} setListaPessoas={setListaPessoas} />
 
       <div className="meu-form">
-        <FiltroDatas setDiaMes={setDiaInicial} setdiaSemana={addDiaSemana}  />
-        <h2>Dias da semana sem escala</h2>
-        {
-          exclusaoSemana.map( (dia) => <a>* {dia}</a> )
-        }
+        <FiltroDatas listaDiasMes={diasMes} setListaDiasMes={setDiasMes} listaDiasSemana={diasSemana} setListaDiasSemana={setDiasSemana} />
       </div>
 
       <form className="meu-form" onSubmit={handleSubmit}>

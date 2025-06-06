@@ -1,4 +1,4 @@
-h2 {
+h3 {
     color: #eee;
     font-family: sans-serif;
 }
@@ -14,5 +14,5 @@ h2 {
     padding: 0 10px;
     width: 95%;
     height: 30px;
-    margin-top: 20px;
+    margin-top: 10px;
 }

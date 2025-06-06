@@ -6,7 +6,9 @@ export default function ListaPessoas({listaPessoas, setListaPessoas}){
 
   const addPessoa = function() {
     const pessoaId = uuidv4();
-    const newLista = [...listaPessoas, {nome: "", homeOffice: "", id: pessoaId} ];
+    const newLista =  [...listaPessoas, 
+                      { id: pessoaId, nome: '', listaSemana: [], listaMes: [] } 
+                      ];
     setListaPessoas( newLista );
   }; 
 
