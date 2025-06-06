@@ -1,18 +1,9 @@
-h3 {
+label {
     color: #eee;
     font-family: sans-serif;
+    font-weight: bold;
 }
 
-.input {
-    background-color: #303245;
-    border-radius: 12px;
-    border: 0;
-    box-sizing: border-box;
-    color: #eee;
-    font-size: 17px;
-    outline: 0;
-    padding: 0 10px;
-    width: 95%;
-    height: 30px;
+.filtroDatas{
     margin-top: 10px;
 }
