@@ -1,10 +1,23 @@
 import "./Pessoa.css";
+import FiltroDatas from "../FiltroDatas/FiltroDatas";
 
 export default function Pessoa({pessoa, index, listaPessoas, setListaPessoas}) {
 
     const handleChange = function(evt, index) {
         const newLista = [...listaPessoas];
         newLista[index][evt.target.name] = evt.target.value;
+        setListaPessoas(newLista);
+    };
+
+    const changeDiasMes = function(lista) {
+        const newLista = [...listaPessoas];
+        newLista[index].listaMes = lista;
+        setListaPessoas(newLista);
+    };
+
+    const changeDiasSemana = function(lista) {
+        const newLista = [...listaPessoas];
+        newLista[index].listaSemana = lista;
         setListaPessoas(newLista);
     };
 
@@ -28,21 +41,7 @@ export default function Pessoa({pessoa, index, listaPessoas, setListaPessoas}) {
 
         <span className="remove" onClick={() => handleDelete(index)}>X</span>
 
-        <select
-            required
-            className="input"
-            value={pessoa.homeOffice} 
-            name="homeOffice"
-            onChange={(evt) => handleChange(evt, index)} 
-        >
-            <option value="">Dia home office</option>
-            <option value="segunda">Segunda</option>
-            <option value="terça">Terça</option>
-            <option value="quarta">Quarta</option>
-            <option value="quinta">Quinta</option>
-            <option value="sexta">Sexta</option>
-            <option value="nenhum">Nenhum</option>
-        </select>
+        <FiltroDatas listaDiasMes={pessoa.listaMes} setListaDiasMes={changeDiasMes} listaDiasSemana={pessoa.listaSemana} setListaDiasSemana={changeDiasSemana} />
 
         <div className='separator' />
 
