@@ -4,13 +4,13 @@ import { createClient } from "@supabase/supabase-js";
 export default class myClientSupabase{
 
     constructor(){
-        this.supabase;
-        this.apiInfo;
+        this.supabase = null;
+        this.apiInfo = null;
     }
 
     async load() {
 
-        if (typeof this.supabase === 'undefined'){
+        if (this.supabase === null){
             this.apiInfo = await get('/configSupabase');
             try {
                 this.supabase = createClient(this.apiInfo.url, this.apiInfo.key);
@@ -20,12 +20,12 @@ export default class myClientSupabase{
             };
         };
 
-        return typeof this.supabase !== 'undefined';
+        return this.supabase !== null;
     };
 
     async getSession(){
     
-        if (typeof this.supabase === 'undefined'){
+        if (this.supabase === null){
             return false;
         };
     
@@ -36,7 +36,7 @@ export default class myClientSupabase{
 
     async envioEscala(escala) {
     
-        if (typeof this.supabase === 'undefined'){
+        if (this.supabase === null){
             return false;
         };
     
@@ -49,7 +49,7 @@ export default class myClientSupabase{
     
     async login(userData){
     
-        if (typeof this.supabase === 'undefined'){
+        if (this.supabase === null){
             return false;
         };
     
@@ -64,7 +64,7 @@ export default class myClientSupabase{
     
     async logout(){
     
-        if (typeof this.supabase === 'undefined'){
+        if (this.supabase === null){
             return false;
         };
     
@@ -75,8 +75,8 @@ export default class myClientSupabase{
     
     async getListaPessoas() {
     
-        if (typeof this.supabase === 'undefined'){
-            return null;
+        if (this.supabase === null){
+            return false;
         };
     
         const { 'data':selectData, 'error':selectE } = await this.supabase.from(this.apiInfo.tabela_pessoas)

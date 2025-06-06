@@ -2,7 +2,7 @@ import './Result.css';
 
 export default function Result({messageObj}){
 
-    if (typeof messageObj == 'undefined'){
+    if (messageObj === null){
         return null;
     };
 
