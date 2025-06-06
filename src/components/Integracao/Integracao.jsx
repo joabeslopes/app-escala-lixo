@@ -38,7 +38,7 @@ export default function Integracao({escalaMes, listaPessoas, setListaPessoas}) {
         get_session();
     }, []);
 
-    return <div className="external-div">
+    return <div className="external-container">
         <h1 className="title">Integracao</h1>
 
         {apiLoaded ?

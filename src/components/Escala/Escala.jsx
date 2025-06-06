@@ -10,7 +10,7 @@ export default function Escala({ escalaMes }) {
     const diaInicial = escalaMes[0].dia;
 
     return (
-        <div className="external-div">
+        <div className="external-container">
             <p className="output">
                 *Escala {getMesPtBr(diaInicial)}*
                 <br/><br/>
