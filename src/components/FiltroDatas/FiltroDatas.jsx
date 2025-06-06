@@ -22,7 +22,7 @@ export default function FiltroDatas({listaDiasMes, setListaDiasMes, listaDiasSem
 
   return (
     <div className="filtroDatas">
-        <label>Dia do mes</label>
+        <label>Dias do mes</label>
         <input 
           name="diaMes"
           className="input"
@@ -42,7 +42,7 @@ export default function FiltroDatas({listaDiasMes, setListaDiasMes, listaDiasSem
         value=""
         onChange={(evt) => handleChange(evt, listaDiasSemana, setListaDiasSemana)}
       >
-        <option value="">Dia da semana</option>
+        <option value="">Dias da semana</option>
         <option value="segunda">Segunda</option>
         <option value="terça">Terça</option>
         <option value="quarta">Quarta</option>
