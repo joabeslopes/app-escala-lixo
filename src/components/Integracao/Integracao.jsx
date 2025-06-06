@@ -2,14 +2,15 @@ import "./Integracao.css";
 import { useState, useEffect } from "react";
 import myClientSupabase from "../../myClientSupabase";
 import Result from "../Result/Result";
+import PessoaObj from "../../pessoaObj";
 
 const clientSupabase = new myClientSupabase();
 
 export default function Integracao({escalaMes, listaPessoas, setListaPessoas}) {
 
-    const [userLogged, setUserLogged] = useState(undefined);
+    const [userLogged, setUserLogged] = useState(null);
     const [apiLoaded, setApiLoaded] = useState(false);
-    const [resultMessage, setResultMessage] = useState(undefined);
+    const [resultMessage, setResultMessage] = useState(null);
 
     const setMessage = function(status, text) {
         const message = {
@@ -27,7 +28,7 @@ export default function Integracao({escalaMes, listaPessoas, setListaPessoas}) {
             if (!loaded){
                 setMessage('error', 'Conexão com a integração');
             } else {
-                setResultMessage(undefined);
+                setResultMessage(null);
             };
 
             const hasSession = await clientSupabase.getSession();
@@ -86,7 +87,7 @@ function LoginForm({userLogged, setUserLogged, setMessage}){
         setUserLogged(!logoutSuccess);
     };
 
-    if (typeof userLogged === "undefined"){
+    if ( userLogged === null ){
         return null
     };
 
@@ -133,7 +134,7 @@ function EnvioEscala({userLogged, escalaMes, setMessage}){
         };
     };
 
-    if (typeof userLogged === "undefined" || !userLogged){
+    if (userLogged === null || !userLogged){
         return null;
     };
 
@@ -149,10 +150,18 @@ function EnvioPessoas({userLogged, setListaPessoas, setMessage}){
 
     const handleSubmit = async function () {
 
-        const lista = await clientSupabase.getListaPessoas();
-        const sucesso = lista !== null;
+        const listaSupabase = await clientSupabase.getListaPessoas();
+        const sucesso = listaSupabase !== null;
 
-        if (sucesso && lista.length > 0){
+        if (sucesso && listaSupabase.length > 0){
+
+            const lista = listaSupabase.map( (row) => {
+                const pessoa = new PessoaObj(row.id);
+                pessoa.nome = row.nome;
+                pessoa.listaSemana.push(row.homeOffice);
+                return pessoa
+            });
+
             setListaPessoas(lista)
             setMessage('success', 'Obteve lista de pessoas')
         } else {
@@ -160,7 +169,7 @@ function EnvioPessoas({userLogged, setListaPessoas, setMessage}){
         };
     };
 
-    if (typeof userLogged === "undefined" || !userLogged){
+    if (userLogged === null || !userLogged){
         return null
     };
 
