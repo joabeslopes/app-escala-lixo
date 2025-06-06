@@ -1,13 +1,12 @@
 import Pessoa from "../Pessoa/Pessoa";
 import "./ListaPessoas.css";
-import { v4 as uuidv4 } from 'uuid';
+import PessoaObj from "../../pessoaObj";
 
 export default function ListaPessoas({listaPessoas, setListaPessoas}){
 
   const addPessoa = function() {
-    const pessoaId = uuidv4();
     const newLista =  [...listaPessoas, 
-                      { id: pessoaId, nome: '', listaSemana: [], listaMes: [] } 
+                      new PessoaObj()
                       ];
     setListaPessoas( newLista );
   }; 
