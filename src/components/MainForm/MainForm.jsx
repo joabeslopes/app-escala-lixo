@@ -53,7 +53,7 @@ export default function MainForm() {
     <>
       <Integracao escalaMes={escalaMes} listaPessoas={listaPessoas} setListaPessoas={setListaPessoas} />
 
-      <div className="external-div">
+      <div className="external-container">
         <h2 className="title">Dia inicial</h2>
         <input 
           name="diaInicial"
@@ -75,7 +75,7 @@ export default function MainForm() {
 
       </div>
 
-      <form className="external-div" onSubmit={handleSubmit}>
+      <form className="external-container" onSubmit={handleSubmit}>
         <h2 className="title">Pessoas/Grupos</h2>
 
         <ListaPessoas listaPessoas={listaPessoas} setListaPessoas={setListaPessoas} />

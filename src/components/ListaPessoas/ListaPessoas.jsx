@@ -12,7 +12,7 @@ export default function ListaPessoas({listaPessoas, setListaPessoas}){
   }; 
 
   return (
-    <div className="internal-div">
+    <div className="internal-container">
       
       {listaPessoas.map((pessoa, index) => (
 

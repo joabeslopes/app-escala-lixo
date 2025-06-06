@@ -21,7 +21,7 @@ export default function FiltroDatas({listaDiasMes, setListaDiasMes, listaDiasSem
   };
 
   return (
-    <div className="internal-div">
+    <div className="internal-container">
         <label>Dias do mes</label>
         <input 
           name="diaMes"
