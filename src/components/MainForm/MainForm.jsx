@@ -5,10 +5,11 @@ import Escala from "../Escala/Escala";
 import FiltroDatas from "../FiltroDatas/FiltroDatas";
 import gerarEscala from "../../escala";
 import Integracao from "../Integracao/Integracao";
+import { getDiaAtual } from "../../myDates";
 
 async function gerarEscalaFinal(dados, setEscalaMes) {
 
-  const escala = await gerarEscala(dados.diaInicial, dados.exclusaoSemana, dados.listaPessoas);
+  const escala = await gerarEscala(dados);
 
   if (typeof escala === "undefined"){
     alert('Erro ao gerar escala, verifique os dados e tente novamente')
@@ -25,6 +26,8 @@ export default function MainForm() {
 
   const [escalaMes, setEscalaMes] = useState([]);
 
+  const [diaInicial, setDiaInicial] = useState(getDiaAtual());
+
   const [diasMes, setDiasMes] = useState([]);
 
   const [diasSemana, setDiasSemana] = useState([]);
@@ -37,17 +40,11 @@ export default function MainForm() {
       return null;
     };
 
-    const listaFiltrada = listaPessoas.map((pessoa) => {
-      return {
-        nome: pessoa.nome,
-        homeOffice: pessoa.listaSemana[0],
-      }
-    });
-
     const dados = {
-      listaPessoas: listaFiltrada,
-      diaInicial: diasMes[0],
-      exclusaoSemana: [...diasSemana]
+      listaPessoas: [...listaPessoas],
+      diaInicial: diaInicial,
+      exclusaoSemana: [...diasSemana],
+      exclusaoMes: [...diasMes]
     };
 
     await gerarEscalaFinal(dados, setEscalaMes);
@@ -59,11 +56,20 @@ export default function MainForm() {
       <Integracao escalaMes={escalaMes} listaPessoas={listaPessoas} setListaPessoas={setListaPessoas} />
 
       <div className="meu-form">
+        <h2 className="form-title">Dia inicial</h2>
+        <input 
+          name="diaInicial"
+          className="input"
+          type="date"
+          value={diaInicial}
+          onChange={(evt) => setDiaInicial(evt.target.value)} />
+
+        <h2 className="form-title">Dias sem escala</h2>
         <FiltroDatas listaDiasMes={diasMes} setListaDiasMes={setDiasMes} listaDiasSemana={diasSemana} setListaDiasSemana={setDiasSemana} />
       </div>
 
       <form className="meu-form" onSubmit={handleSubmit}>
-        <h2 className="form-title">Escala do lixo</h2>
+        <h2 className="form-title">Pessoas/Grupos</h2>
 
         <ListaPessoas listaPessoas={listaPessoas} setListaPessoas={setListaPessoas} />
 

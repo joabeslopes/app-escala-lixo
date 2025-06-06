@@ -1,8 +1,13 @@
 import {gerarListaMes, getDiaIndex, defaultTimezone} from './myDates';
 
-export default async function gerarEscala(diaInicial, exclusaoSemana, listaPessoas){
+export default async function gerarEscala(dados){
 
-    const listaMes = await gerarListaMes(diaInicial, exclusaoSemana);
+    const diaInicial = dados.diaInicial;
+    const exclusaoSemana = dados.exclusaoSemana;
+    const exclusaoMes = dados.exclusaoMes;
+    const listaPessoas = dados.listaPessoas;
+
+    const listaMes = await gerarListaMes(diaInicial, exclusaoSemana, exclusaoMes);
     if ( typeof listaMes === "undefined" ){
         return undefined;
     };
@@ -43,12 +48,13 @@ function geraEscalaDia(dia, listaPessoas){
     let escalaDia;
     const d = new Date(dia+defaultTimezone);
     const diaIdx = d.getDay();
+    const diaISO = d.toISOString().split('T')[0];
 
     for (let pessoaIdx = 0; pessoaIdx < listaPessoas.length; pessoaIdx++ ){
         const pessoa = listaPessoas[pessoaIdx];
-        const diaHomeIndex = getDiaIndex(pessoa.homeOffice);
-        // se a pessoa nao estiver de home office, coloca ela na escala e tira ela da fila
-        if (diaHomeIndex != diaIdx){
+        const pessoaListaSemanaIndex = pessoa.listaSemana.map( (diaSemana) => getDiaIndex(diaSemana) );
+        // se o dia do mes e da semana não estiver nas listas, coloca a pessoa na escala e tira ela da fila
+        if (!pessoaListaSemanaIndex.includes(diaIdx) && !pessoa.listaMes.includes(diaISO)){
             escalaDia = {   "dia": dia,
                             "nome": pessoa.nome
             };
