@@ -12,7 +12,7 @@ export default function Escala({ escalaMes }) {
     return (
         <div className="output-container">
             <p className="output">
-                *Escala lixo {getMesPtBr(diaInicial)}*
+                *Escala {getMesPtBr(diaInicial)}*
                 <br/><br/>
                 {escalaMes.map( (dia) =>
                     <DiaEscala dia={dia}/>
