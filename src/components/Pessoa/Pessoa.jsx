@@ -29,17 +29,18 @@ export default function Pessoa({pessoa, index, listaPessoas, setListaPessoas}) {
 
     return (
         <>
-        <input
-            required
-            type="text"
-            className="input"
-            placeholder="Nome"
-            name="nome"
-            value={pessoa.nome} 
-            onChange={(evt) => handleChange(evt, index)}
-        />
-
-        <span className="remove" onClick={() => handleDelete(index)}>X</span>
+        <div className="nomePessoa">
+            <input
+                required
+                type="text"
+                className="input"
+                placeholder="Nome"
+                name="nome"
+                value={pessoa.nome} 
+                onChange={(evt) => handleChange(evt, index)}
+            />
+            <span className="remove" onClick={() => handleDelete(index)}>X</span>
+        </div>
 
         <FiltroDatas listaDiasMes={pessoa.listaMes} setListaDiasMes={changeDiasMes} listaDiasSemana={pessoa.listaSemana} setListaDiasSemana={changeDiasSemana} />
 

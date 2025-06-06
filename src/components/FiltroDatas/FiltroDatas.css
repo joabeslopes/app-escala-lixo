@@ -6,4 +6,9 @@ label {
 
 .filtroDatas{
     margin-top: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    width: 100%;
+    height: auto;
 }

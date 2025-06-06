@@ -4,9 +4,10 @@
     box-sizing: border-box;
     padding: 20px;
     width: var(--div-width-default);
+    height: auto;
     display: flex;
     flex-direction: column;
-    height: auto;
+    align-items: start;
     margin-bottom: var(--div-margin-bottom);
 }
 
@@ -63,4 +64,8 @@ a {
 
 p {
     margin: 10px 0;
+}
+
+.checkbox {
+    transform: scale(1.5);
 }
