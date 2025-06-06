@@ -6,6 +6,7 @@ import FiltroDatas from "../FiltroDatas/FiltroDatas";
 import gerarEscala from "../../escala";
 import Integracao from "../Integracao/Integracao";
 import { getDiaAtual } from "../../myDates";
+import PessoaObj from "../../pessoaObj";
 
 async function gerarEscalaFinal(dados, setEscalaMes) {
 
@@ -22,7 +23,7 @@ async function gerarEscalaFinal(dados, setEscalaMes) {
 
 export default function MainForm() {
 
-  const [listaPessoas, setListaPessoas] = useState([{ id: '', nome: '', listaSemana: [], listaMes: [] }]);
+  const [listaPessoas, setListaPessoas] = useState([ new PessoaObj() ]);
 
   const [escalaMes, setEscalaMes] = useState([]);
 
