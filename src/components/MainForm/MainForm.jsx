@@ -8,18 +8,6 @@ import Integracao from "../Integracao/Integracao";
 import { getDiaAtual } from "../../myDates";
 import PessoaObj from "../../pessoaObj";
 
-async function gerarEscalaFinal(dados, setEscalaMes) {
-
-  const escala = await gerarEscala(dados);
-
-  if (typeof escala === "undefined"){
-    alert('Erro ao gerar escala, verifique os dados e tente novamente')
-  } else {
-    setEscalaMes(escala);
-  }
-
-};
-
 
 export default function MainForm() {
 
@@ -33,6 +21,8 @@ export default function MainForm() {
 
   const [diasSemana, setDiasSemana] = useState([]);
 
+  const [ignoraFeriados, setIgnoraFeriados] = useState(false);
+
   const handleSubmit = async function (evt) {
 
     evt.preventDefault();
@@ -45,10 +35,17 @@ export default function MainForm() {
       listaPessoas: [...listaPessoas],
       diaInicial: diaInicial,
       exclusaoSemana: [...diasSemana],
-      exclusaoMes: [...diasMes]
+      exclusaoMes: [...diasMes],
+      ignoraFeriados: ignoraFeriados
     };
 
-    await gerarEscalaFinal(dados, setEscalaMes);
+    const escala = await gerarEscala(dados);
+
+    if (escala === null){
+      alert('Erro ao gerar escala, verifique os dados e tente novamente')
+    } else {
+      setEscalaMes(escala);
+    };
 
   };
 
@@ -65,8 +62,17 @@ export default function MainForm() {
           value={diaInicial}
           onChange={(evt) => setDiaInicial(evt.target.value)} />
 
+        <h2 className="form-title">Ignorar feriados</h2>
+        <input 
+          name="ignoraFeriados"
+          className="checkbox"
+          type="checkbox"
+          onChange={() => setIgnoraFeriados(!ignoraFeriados) }
+          />
+
         <h2 className="form-title">Dias sem escala</h2>
         <FiltroDatas listaDiasMes={diasMes} setListaDiasMes={setDiasMes} listaDiasSemana={diasSemana} setListaDiasSemana={setDiasSemana} />
+
       </div>
 
       <form className="meu-form" onSubmit={handleSubmit}>

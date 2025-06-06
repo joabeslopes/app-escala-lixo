@@ -2,18 +2,15 @@ import {gerarListaMes, getDiaIndex, defaultTimezone} from './myDates';
 
 export default async function gerarEscala(dados){
 
-    const diaInicial = dados.diaInicial;
-    const exclusaoSemana = dados.exclusaoSemana;
-    const exclusaoMes = dados.exclusaoMes;
-    const listaPessoas = dados.listaPessoas;
-
-    const listaMes = await gerarListaMes(diaInicial, exclusaoSemana, exclusaoMes);
-    if ( typeof listaMes === "undefined" ){
-        return undefined;
+    const listaMes = await gerarListaMes(dados);
+    if ( listaMes === null ){
+        return null;
     };
 
-    let newListaPessoas = [...listaPessoas];
+    const listaPessoas = dados.listaPessoas;
     const newListaMes = [];
+
+    let newListaPessoas = [...listaPessoas];
 
     listaMes.forEach( (dia) => {
 

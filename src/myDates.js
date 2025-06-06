@@ -54,18 +54,23 @@ async function getFeriados(ano){
 
   const response = await fetch('https://brasilapi.com.br/api/feriados/v1/'+ano,
   ).then(r => r.json()
-  ).catch(error => undefined);
+  ).catch(error => false);
 
   if (!response){
-    return undefined;
+    return null;
   } else {
-    const listaFeriados = response.map( feriado => feriado.date )
-    return listaFeriados;
+    const newListaFeriados = response.map( feriado => feriado.date )
+    return newListaFeriados;
   };
 
 };
 
-export async function gerarListaMes(diaInicial, exclusaoSemana, exclusaoMes){
+export async function gerarListaMes(dados){
+
+  const diaInicial = dados.diaInicial;
+  const exclusaoSemana = dados.exclusaoSemana;
+  const exclusaoMes = dados.exclusaoMes;
+  const ignoraFeriados = dados.ignoraFeriados;
 
   const objDiaInicial = new Date(diaInicial+defaultTimezone);
   const ano = objDiaInicial.getFullYear();
@@ -73,12 +78,20 @@ export async function gerarListaMes(diaInicial, exclusaoSemana, exclusaoMes){
   const listaExclusaoSemana = exclusaoSemana.map( (d) => getDiaIndex(d) );
   const listaMes = [];
 
-  if (ano !== anoGlobal){
-    listaFeriados = await getFeriados(ano);
-    if ( typeof listaFeriados === "undefined" ){
-      return undefined;
+  // Não buscar se o usuario marcar o checkbox
+  if (!ignoraFeriados){
+
+    if (ano !== anoGlobal){
+      listaFeriados = await getFeriados(ano);
+      if ( listaFeriados === null ){
+        return null;
+      };
+      anoGlobal = ano;
     };
-    anoGlobal = ano;
+
+  } else {
+    listaFeriados = [];
+    anoGlobal = '';
   };
 
   while ( objDiaInicial.getMonth() == mes ){
