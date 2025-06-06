@@ -65,7 +65,7 @@ async function getFeriados(ano){
 
 };
 
-export async function gerarListaMes(diaInicial, exclusaoSemana){
+export async function gerarListaMes(diaInicial, exclusaoSemana, exclusaoMes){
 
   const objDiaInicial = new Date(diaInicial+defaultTimezone);
   const ano = objDiaInicial.getFullYear();
@@ -86,8 +86,8 @@ export async function gerarListaMes(diaInicial, exclusaoSemana){
     const diaISO = objDiaInicial.toISOString().split('T')[0];
     const diaAtual = objDiaInicial.getDay();
     
-    // o dia nao é feriado e não está na exclusao da semana
-    if (!listaFeriados.includes(diaISO) && !listaExclusaoSemana.includes(diaAtual) ){
+    // o dia nao é feriado, não está na exclusao da semana e nem do mes
+    if (!listaFeriados.includes(diaISO) && !listaExclusaoSemana.includes(diaAtual) && !exclusaoMes.includes(diaISO) ){
       listaMes.push(diaISO);
     };
 
