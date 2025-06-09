@@ -39,9 +39,16 @@ export default class myClientSupabase{
         if (this.supabase === null){
             return false;
         };
-    
+
+        const newEscala = [];
+        escala.forEach( (diaEscala) => 
+            diaEscala.nome.forEach( (pessoa) => { 
+                newEscala.push( {dia: diaEscala.dia, nome: pessoa } );
+            })
+        );
+
         const { 'data':updateData, 'error':updateE } = await this.supabase.from(this.apiInfo.tabela_escala)
-                                                                    .upsert(escala)
+                                                                    .upsert(newEscala)
                                                                     .select();
     
         return updateData !== null;
