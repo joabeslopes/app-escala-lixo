@@ -9,30 +9,43 @@ export default async function gerarEscala(dados){
 
     const listaPessoas = dados.listaPessoas;
     const newListaMes = [];
+    const pessoasDia = dados.pessoasDia;
 
     let newListaPessoas = [...listaPessoas];
 
     listaMes.forEach( (dia) => {
 
-        if (newListaPessoas.length == 0){
-            newListaPessoas = [...listaPessoas];
+        const escalaDia = {
+            dia: dia,
+            nome: []
         };
 
-        let escalaDia = geraEscalaDia(dia, newListaPessoas);
+        for (let i = 0; i < pessoasDia; i++){
 
-        // caso nao funcione, extende a lista e tenta de novo
-        if (typeof escalaDia === "undefined"){
+            if (newListaPessoas.length == 0){
+                newListaPessoas = [...listaPessoas];
+            };
+    
+            let newEscalaDia = geraEscalaDia(dia, newListaPessoas);
+    
+            // caso nao funcione, extende a lista e tenta de novo
+            if (newEscalaDia === null){
+    
+                newListaPessoas = [
+                    ...newListaPessoas,
+                    ...listaPessoas
+                ];
+                newEscalaDia = geraEscalaDia(dia, newListaPessoas);
+            };
 
-            newListaPessoas = [
-                ...newListaPessoas,
-                ...listaPessoas
-            ];
-            escalaDia = geraEscalaDia(dia, newListaPessoas);
+            // só acrescenta se achar alguem disponivel e ainda nao incluido no dia
+            if (newEscalaDia !== null && !escalaDia.nome.includes(newEscalaDia.nome)){
+                escalaDia.nome.push( newEscalaDia.nome );
+            };
         };
 
-        // se funcionar faz o push, se nao ignora e vai para o proximo dia
-        if (typeof escalaDia !== "undefined"){
-            newListaMes.push(escalaDia);
+        if (escalaDia.nome.length > 0) {
+            newListaMes.push(escalaDia)
         };
 
     });
@@ -42,7 +55,7 @@ export default async function gerarEscala(dados){
 
 function geraEscalaDia(dia, listaPessoas){
 
-    let escalaDia;
+    let escalaDia = null;
     const d = new Date(dia+defaultTimezone);
     const diaIdx = d.getDay();
     const diaISO = d.toISOString().split('T')[0];

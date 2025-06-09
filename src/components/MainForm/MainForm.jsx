@@ -23,6 +23,8 @@ export default function MainForm() {
 
   const [ignoraFeriados, setIgnoraFeriados] = useState(false);
 
+  const [pessoasDia, setPessoasDia] = useState(1);
+
   const handleSubmit = async function (evt) {
 
     evt.preventDefault();
@@ -36,7 +38,8 @@ export default function MainForm() {
       diaInicial: diaInicial,
       exclusaoSemana: [...diasSemana],
       exclusaoMes: [...diasMes],
-      ignoraFeriados: ignoraFeriados
+      ignoraFeriados: ignoraFeriados,
+      pessoasDia: pessoasDia
     };
 
     const escala = await gerarEscala(dados);
@@ -76,8 +79,18 @@ export default function MainForm() {
       </div>
 
       <form className="external-container" onSubmit={handleSubmit}>
-        <h2 className="title">Pessoas/Grupos</h2>
+        <h3 className="title">Pessoas por dia</h3>
+        <input
+          required
+          name="pessoasDia"
+          className="input"
+          type="number"
+          min="1"
+          value={pessoasDia}
+          onChange={(evt) => setPessoasDia(evt.target.value) }
+          />
 
+        <h2 className="title">Pessoas/Grupos</h2>
         <ListaPessoas listaPessoas={listaPessoas} setListaPessoas={setListaPessoas} />
 
         <button type="submit" className="submit">Gerar</button>

@@ -24,7 +24,15 @@ export default function Escala({ escalaMes }) {
 
 function DiaEscala({dia}){
 
-    const escalaString = getDiaPtBr(dia.dia) + " - " + dia.nome;
+    let escalaString = getDiaPtBr(dia.dia) + " - ";
+    const lastNome = dia.nome.length - 1;
+    for (let i = 0; i <= lastNome; i++) {
+        const nome = dia.nome[i];
+        escalaString += nome;
+        if (i !== lastNome) {
+            escalaString += ' / ';
+        };
+    };
     return <> 
         {escalaString} 
         <br/> 
