@@ -22,13 +22,14 @@ export default function FiltroDatas({listaDiasMes, setListaDiasMes, listaDiasSem
 
   return (
     <div className="internal-container">
-        <label>Dias do mes</label>
-        <input 
-          name="diaMes"
-          className="input"
-          type="date"
-          value=""
-          onChange={(evt) => handleChange(evt, listaDiasMes, setListaDiasMes)} />
+      <label>Dias do mes sem escala</label>
+      <input 
+        name="diaMes"
+        className="input"
+        type="date"
+        value=""
+        onChange={(evt) => handleChange(evt, listaDiasMes, setListaDiasMes)} 
+      />
 
       {listaDiasMes.map( (dia) => 
         <p>
@@ -36,6 +37,7 @@ export default function FiltroDatas({listaDiasMes, setListaDiasMes, listaDiasSem
         </p>
       )}
 
+      <label>Dias da semana sem escala</label>
       <select
         name="diaSemana"
         className="input"

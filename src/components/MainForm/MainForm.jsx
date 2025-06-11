@@ -72,8 +72,7 @@ export default function MainForm() {
           type="checkbox"
           onChange={() => setIgnoraFeriados(!ignoraFeriados) }
           />
-
-        <h2 className="title">Dias sem escala</h2>
+        <p></p>
         <FiltroDatas listaDiasMes={diasMes} setListaDiasMes={setDiasMes} listaDiasSemana={diasSemana} setListaDiasSemana={setDiasSemana} />
 
       </div>
