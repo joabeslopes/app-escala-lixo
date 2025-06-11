@@ -1,5 +1,5 @@
 import "./FiltroDatas.css";
-import { getDiaPtBr } from "../../myDates";
+import { getDiaPtBr, diasOptions } from "../../myDates";
 
 export default function FiltroDatas({listaDiasMes, setListaDiasMes, listaDiasSemana, setListaDiasSemana}) {
 
@@ -42,19 +42,14 @@ export default function FiltroDatas({listaDiasMes, setListaDiasMes, listaDiasSem
         value=""
         onChange={(evt) => handleChange(evt, listaDiasSemana, setListaDiasSemana)}
       >
-        <option value="">Dias da semana</option>
-        <option value="segunda">Segunda</option>
-        <option value="terça">Terça</option>
-        <option value="quarta">Quarta</option>
-        <option value="quinta">Quinta</option>
-        <option value="sexta">Sexta</option>
-        <option value="sabado">Sabado</option>
-        <option value="domingo">Domingo</option>
+      {
+        Object.keys(diasOptions).map( (diaKey) => <option value={diaKey}>{diasOptions[diaKey]}</option> )
+      }
       </select>
 
       {listaDiasSemana.map( (dia) => 
         <p>
-          <a>* {dia}</a>
+          <a>* {diasOptions[dia]}</a>
         </p>
       )}
     </div>

@@ -58,13 +58,12 @@ function geraEscalaDia(dia, listaPessoas){
     let escalaDia = null;
     const d = new Date(dia+defaultTimezone);
     const diaIdx = d.getDay();
-    const diaISO = d.toISOString().split('T')[0];
 
     for (let pessoaIdx = 0; pessoaIdx < listaPessoas.length; pessoaIdx++ ){
         const pessoa = listaPessoas[pessoaIdx];
         const pessoaListaSemanaIndex = pessoa.listaSemana.map( (diaSemana) => getDiaIndex(diaSemana) );
         // se o dia do mes e da semana não estiver nas listas, coloca a pessoa na escala e tira ela da fila
-        if (!pessoaListaSemanaIndex.includes(diaIdx) && !pessoa.listaMes.includes(diaISO)){
+        if (!pessoaListaSemanaIndex.includes(diaIdx) && !pessoa.listaMes.includes(dia)){
             escalaDia = {   "dia": dia,
                             "nome": pessoa.nome
             };

@@ -1,6 +1,28 @@
-export var defaultTimezone = 'T12:00:00.000-03:00';
-var defaultTimezoneOffset = 180;
+export const defaultTimezone = 'T12:00:00.000-03:00';
+const defaultTimezoneOffset = 180;
 var anoGlobal, listaFeriados;
+
+export const diasOptions = {
+  "": "Dias da semana",
+  "segunda": "Segunda",
+  "terça": "Terça",
+  "quarta": "Quarta",
+  "quinta": "Quinta",
+  "sexta": "Sexta",
+  "sabado": "Sabado",
+  "domingo": "Domingo"
+};
+
+const diasIndex = {
+  "nenhum": -1,
+  "domingo": 0,
+  "segunda": 1,
+  "terça": 2,
+  "quarta": 3,
+  "quinta": 4,
+  "sexta": 5,
+  "sabado": 6
+};
 
 function getLocaleString(diaISO, options){
   const d = new Date(diaISO+defaultTimezone);
@@ -30,19 +52,9 @@ export function getDiaAtual(){
 }
 
 export function getDiaIndex(diaString){
-  const dicionarioDias = {
-    "nenhum": -1,
-    "domingo": 0,
-    "segunda": 1,
-    "terça": 2,
-    "quarta": 3,
-    "quinta": 4,
-    "sexta": 5,
-    "sabado": 6
-  };
 
-  if ( dicionarioDias.hasOwnProperty(diaString) ){
-    return dicionarioDias[diaString];
+  if ( diasIndex.hasOwnProperty(diaString) ){
+    return diasIndex[diaString];
   }
   else {
     return -1;
