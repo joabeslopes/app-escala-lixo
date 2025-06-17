@@ -25,6 +25,8 @@ export default function MainForm() {
 
   const [pessoasDia, setPessoasDia] = useState(1);
 
+  const [listaGrupos, setListaGrupos] = useState([ new PessoaObj() ]);
+
   const handleSubmit = async function (evt) {
 
     evt.preventDefault();
@@ -39,7 +41,8 @@ export default function MainForm() {
       exclusaoSemana: [...diasSemana],
       exclusaoMes: [...diasMes],
       ignoraFeriados: ignoraFeriados,
-      pessoasDia: pessoasDia
+      pessoasDia: pessoasDia,
+      listaGrupos: [...listaGrupos],
     };
 
     const escala = await gerarEscala(dados);
@@ -89,8 +92,11 @@ export default function MainForm() {
           onChange={(evt) => setPessoasDia(evt.target.value) }
           />
 
-        <h2 className="title">Pessoas/Grupos</h2>
+        <h2 className="title">Pessoas</h2>
         <ListaPessoas listaPessoas={listaPessoas} setListaPessoas={setListaPessoas} />
+
+        <h2 className="title">Grupos fixos</h2>
+        <ListaPessoas listaPessoas={listaGrupos} setListaPessoas={setListaGrupos} />
 
         <button type="submit" className="submit">Gerar</button>
       </form>

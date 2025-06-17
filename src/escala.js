@@ -7,50 +7,101 @@ export default async function gerarEscala(dados){
         return null;
     };
 
-    const listaPessoas = dados.listaPessoas;
     const newListaMes = [];
-    const pessoasDia = dados.pessoasDia;
 
-    let newListaPessoas = [...listaPessoas];
+    let newListaPessoas = [...dados.listaPessoas];
+    let newListaGrupos = [...dados.listaGrupos];
+    let addGrupo = true;
 
     listaMes.forEach( (dia) => {
 
-        const escalaDia = {
-            dia: dia,
-            nome: []
+        if (addGrupo && dados.listaGrupos.length > 0){
+            geraEscalaGrupos(dia, newListaGrupos, newListaMes, dados);
+        } else {
+            geraEscalaPessoas(dia, newListaPessoas, newListaMes, dados);
         };
 
-        for (let i = 0; i < pessoasDia; i++){
-
-            if (newListaPessoas.length == 0){
-                newListaPessoas = [...listaPessoas];
-            };
-    
-            let newEscalaDia = geraEscalaDia(dia, newListaPessoas);
-    
-            // caso nao funcione, extende a lista e tenta de novo
-            if (newEscalaDia === null){
-    
-                newListaPessoas = [
-                    ...newListaPessoas,
-                    ...listaPessoas
-                ];
-                newEscalaDia = geraEscalaDia(dia, newListaPessoas);
-            };
-
-            // só acrescenta se achar alguem disponivel e ainda nao incluido no dia
-            if (newEscalaDia !== null && !escalaDia.nome.includes(newEscalaDia.nome)){
-                escalaDia.nome.push( newEscalaDia.nome );
-            };
-        };
-
-        if (escalaDia.nome.length > 0) {
-            newListaMes.push(escalaDia)
-        };
-
+        addGrupo = !addGrupo;
     });
 
     return newListaMes;
+};
+
+
+function geraEscalaGrupos(dia, newListaGrupos, newListaMes, dados){
+
+    const listaGrupos = dados.listaGrupos;
+
+    const escalaDia = {
+        dia: dia,
+        nome: []
+    };
+
+    if (newListaGrupos.length == 0){
+        newListaGrupos = [...listaGrupos];
+    };
+
+    let newEscalaDia = geraEscalaDia(dia, newListaGrupos);
+
+    // caso nao funcione, extende a lista e tenta de novo
+    if (newEscalaDia === null){
+
+        newListaGrupos = [
+            ...newListaGrupos,
+            ...listaGrupos
+        ];
+        newEscalaDia = geraEscalaDia(dia, newListaGrupos);
+    };
+
+    // só acrescenta se achar alguem disponivel e ainda nao incluido no dia
+    if (newEscalaDia !== null && !escalaDia.nome.includes(newEscalaDia.nome)){
+        escalaDia.nome.push( newEscalaDia.nome );
+    };
+
+    if (escalaDia.nome.length > 0) {
+        newListaMes.push(escalaDia)
+    };
+
+};
+
+
+function geraEscalaPessoas(dia, newListaPessoas, newListaMes, dados){
+
+    const pessoasDia = dados.pessoasDia;
+    const listaPessoas = dados.listaPessoas;
+
+    const escalaDia = {
+        dia: dia,
+        nome: []
+    };
+
+    for (let i = 0; i < pessoasDia; i++){
+
+        if (newListaPessoas.length == 0){
+            newListaPessoas = [...listaPessoas];
+        };
+
+        let newEscalaDia = geraEscalaDia(dia, newListaPessoas);
+
+        // caso nao funcione, extende a lista e tenta de novo
+        if (newEscalaDia === null){
+
+            newListaPessoas = [
+                ...newListaPessoas,
+                ...listaPessoas
+            ];
+            newEscalaDia = geraEscalaDia(dia, newListaPessoas);
+        };
+
+        // só acrescenta se achar alguem disponivel e ainda nao incluido no dia
+        if (newEscalaDia !== null && !escalaDia.nome.includes(newEscalaDia.nome)){
+            escalaDia.nome.push( newEscalaDia.nome );
+        };
+    };
+
+    if (escalaDia.nome.length > 0) {
+        newListaMes.push(escalaDia)
+    };
 };
 
 function geraEscalaDia(dia, listaPessoas){
