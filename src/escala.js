@@ -18,7 +18,9 @@ export default async function gerarEscala(dados){
         if (addGrupo && dados.listaGrupos.length > 0){
             geraEscalaGrupos(dia, newListaGrupos, newListaMes, dados);
         } else {
-            geraEscalaPessoas(dia, newListaPessoas, newListaMes, dados);
+            if (dados.listaPessoas.length > 0){
+                geraEscalaPessoas(dia, newListaPessoas, newListaMes, dados);
+            };
         };
 
         addGrupo = !addGrupo;
