@@ -35,22 +35,29 @@ export default class myClientSupabase{
     }
 
     async envioEscala(escala) {
-    
+
         if (this.supabase === null){
             return false;
         };
 
         const newEscala = [];
-        escala.forEach( (diaEscala) => 
+        const dias = [];
+        escala.forEach( (diaEscala) => {
             diaEscala.nome.forEach( (pessoa) => { 
                 newEscala.push( {dia: diaEscala.dia, nome: pessoa } );
-            })
-        );
+            });
+
+            dias.push(diaEscala.dia);
+        });
+
+        // deleta primeiro para depois inserir
+        await this.supabase.from(this.apiInfo.tabela_escala).delete()
+                                                            .in('dia', dias);
 
         const { 'data':updateData, 'error':updateE } = await this.supabase.from(this.apiInfo.tabela_escala)
-                                                                    .upsert(newEscala)
+                                                                    .insert(newEscala)
                                                                     .select();
-    
+
         return updateData !== null;
     };
     
