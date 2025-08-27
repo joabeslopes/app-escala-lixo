@@ -2,7 +2,7 @@ import Pessoa from "../Pessoa/Pessoa";
 import "./ListaPessoas.css";
 import PessoaObj from "../../pessoaObj";
 
-export default function ListaPessoas({listaPessoas, setListaPessoas}){
+export default function ListaPessoas({listaPessoas, setListaPessoas, diasOptions}){
 
   const addPessoa = function() {
     const newLista =  [...listaPessoas, 
@@ -22,8 +22,9 @@ export default function ListaPessoas({listaPessoas, setListaPessoas}){
           index={index}
           listaPessoas={listaPessoas}
           setListaPessoas={setListaPessoas}
+          diasOptions={diasOptions}
         />
-
+      
       ))}
       
       <button className="submit" onClick={ addPessoa }>Add pessoa</button>

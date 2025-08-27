@@ -5,8 +5,8 @@ import Escala from "../Escala/Escala";
 import FiltroDatas from "../FiltroDatas/FiltroDatas";
 import gerarEscala from "../../escala";
 import Integracao from "../Integracao/Integracao";
-import { getDiaAtual } from "../../myDates";
 import PessoaObj from "../../pessoaObj";
+import Dias from "../Dias/Dias";
 
 
 export default function MainForm() {
@@ -15,7 +15,7 @@ export default function MainForm() {
 
   const [escalaMes, setEscalaMes] = useState([]);
 
-  const [diaInicial, setDiaInicial] = useState(getDiaAtual());
+  const [diaInicial, setDiaInicial] = useState("");
 
   const [diasMes, setDiasMes] = useState([]);
 
@@ -24,6 +24,8 @@ export default function MainForm() {
   const [ignoraFeriados, setIgnoraFeriados] = useState(false);
 
   const [pessoasDia, setPessoasDia] = useState(1);
+
+  const [diasOptions, setDiasOptions] = useState({"":""});
 
   const handleSubmit = async function (evt) {
 
@@ -39,7 +41,8 @@ export default function MainForm() {
       exclusaoSemana: [...diasSemana],
       exclusaoMes: [...diasMes],
       ignoraFeriados: ignoraFeriados,
-      pessoasDia: pessoasDia
+      pessoasDia: pessoasDia,
+      diasOptions: {...diasOptions}
     };
 
     const escala = await gerarEscala(dados);
@@ -73,8 +76,11 @@ export default function MainForm() {
           onChange={() => setIgnoraFeriados(!ignoraFeriados) }
           />
 
-        <h2 className="title">Dias sem escala</h2>
-        <FiltroDatas listaDiasMes={diasMes} setListaDiasMes={setDiasMes} listaDiasSemana={diasSemana} setListaDiasSemana={setDiasSemana} />
+        <h2 className="title">Dias da semana com escala</h2>
+        <Dias diasOptions={diasOptions} setDiasOptions={setDiasOptions} />
+
+        <h2 className="title">Dias em geral sem escala</h2>
+        <FiltroDatas listaDiasMes={diasMes} setListaDiasMes={setDiasMes} listaDiasSemana={diasSemana} setListaDiasSemana={setDiasSemana} diasOptions={diasOptions} />
 
       </div>
 
@@ -91,7 +97,7 @@ export default function MainForm() {
           />
 
         <h2 className="title">Pessoas/Grupos</h2>
-        <ListaPessoas listaPessoas={listaPessoas} setListaPessoas={setListaPessoas} />
+        <ListaPessoas listaPessoas={listaPessoas} setListaPessoas={setListaPessoas} diasOptions={diasOptions} />
 
         <button type="submit" className="submit">Gerar</button>
       </form>

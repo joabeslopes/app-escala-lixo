@@ -2,26 +2,15 @@ export const defaultTimezone = 'T12:00:00.000-03:00';
 const defaultTimezoneOffset = 180;
 var anoGlobal, listaFeriados;
 
-export const diasOptions = {
-  "": "Dias da semana",
-  "segunda": "Segunda",
-  "terça": "Terça",
-  "quarta": "Quarta",
-  "quinta": "Quinta",
-  "sexta": "Sexta",
-  "sabado": "Sabado",
-  "domingo": "Domingo"
-};
-
-const diasIndex = {
-  "nenhum": -1,
-  "domingo": 0,
-  "segunda": 1,
-  "terça": 2,
-  "quarta": 3,
-  "quinta": 4,
-  "sexta": 5,
-  "sabado": 6
+export const diasIndex = {
+  "": "",
+  "Segunda": 1,
+  "Terça": 2,
+  "Quarta": 3,
+  "Quinta": 4,
+  "Sexta": 5,
+  "Sabado": 6,
+  "Domingo": 0
 };
 
 function getLocaleString(diaISO, options){
@@ -51,17 +40,6 @@ export function getDiaAtual(){
   return diaAtual;
 }
 
-export function getDiaIndex(diaString){
-
-  if ( diasIndex.hasOwnProperty(diaString) ){
-    return diasIndex[diaString];
-  }
-  else {
-    return -1;
-  };
-
-};
-
 async function getFeriados(ano){
 
   const response = await fetch('https://brasilapi.com.br/api/feriados/v1/'+ano,
@@ -83,11 +61,13 @@ export async function gerarListaMes(dados){
   const exclusaoSemana = dados.exclusaoSemana;
   const exclusaoMes = dados.exclusaoMes;
   const ignoraFeriados = dados.ignoraFeriados;
+  const diasOptions = dados.diasOptions;
 
   const objDiaInicial = new Date(diaInicial+defaultTimezone);
   const ano = objDiaInicial.getFullYear();
   const mes = objDiaInicial.getMonth();
-  const listaExclusaoSemana = exclusaoSemana.map( (d) => getDiaIndex(d) );
+  const listaDiasSemana = Object.values(diasOptions);
+  const listaExclusaoSemana = exclusaoSemana.map( (d) => diasOptions[d] );
   const listaMes = [];
 
   // Não buscar se o usuario marcar o checkbox
@@ -109,10 +89,10 @@ export async function gerarListaMes(dados){
   while ( objDiaInicial.getMonth() == mes ){
 
     const diaISO = objDiaInicial.toISOString().split('T')[0];
-    const diaAtual = objDiaInicial.getDay();
-    
+    const diaSemana = objDiaInicial.getDay();
+
     // o dia nao é feriado, não está na exclusao da semana e nem do mes
-    if (!listaFeriados.includes(diaISO) && !listaExclusaoSemana.includes(diaAtual) && !exclusaoMes.includes(diaISO) ){
+    if (listaDiasSemana.includes(diaSemana) && !listaFeriados.includes(diaISO) && !listaExclusaoSemana.includes(diaSemana) && !exclusaoMes.includes(diaISO) ){
       listaMes.push(diaISO);
     };
 

@@ -1,7 +1,7 @@
 import "./FiltroDatas.css";
-import { getDiaPtBr, diasOptions } from "../../myDates";
+import { getDiaPtBr } from "../../myDates";
 
-export default function FiltroDatas({listaDiasMes, setListaDiasMes, listaDiasSemana, setListaDiasSemana}) {
+export default function FiltroDatas({listaDiasMes, setListaDiasMes, listaDiasSemana, setListaDiasSemana, diasOptions}) {
 
   const handleChange = function(evt, lista, setLista) {
       const dia = evt.target.value;
@@ -27,7 +27,6 @@ export default function FiltroDatas({listaDiasMes, setListaDiasMes, listaDiasSem
           name="diaMes"
           className="input"
           type="date"
-          value=""
           onChange={(evt) => handleChange(evt, listaDiasMes, setListaDiasMes)} />
 
       {listaDiasMes.map( (dia) => 
@@ -35,21 +34,20 @@ export default function FiltroDatas({listaDiasMes, setListaDiasMes, listaDiasSem
           <a>* {getDiaPtBr(dia)}</a>
         </p>
       )}
-
+      <label>Dias da semana</label>
       <select
         name="diaSemana"
         className="input"
-        value=""
         onChange={(evt) => handleChange(evt, listaDiasSemana, setListaDiasSemana)}
       >
       {
-        Object.keys(diasOptions).map( (diaKey) => <option value={diaKey}>{diasOptions[diaKey]}</option> )
+        Object.keys(diasOptions).map( (diaNome) => <option value={diaNome}>{diaNome}</option> )
       }
       </select>
 
       {listaDiasSemana.map( (dia) => 
         <p>
-          <a>* {diasOptions[dia]}</a>
+          <a>* {dia}</a>
         </p>
       )}
     </div>

@@ -1,4 +1,4 @@
-import {gerarListaMes, getDiaIndex, defaultTimezone} from './myDates';
+import {gerarListaMes, defaultTimezone} from './myDates';
 
 export default async function gerarEscala(dados){
 
@@ -10,6 +10,7 @@ export default async function gerarEscala(dados){
     const listaPessoas = dados.listaPessoas;
     const newListaMes = [];
     const pessoasDia = dados.pessoasDia;
+    const diasOptions = dados.diasOptions;
 
     let newListaPessoas = [...listaPessoas];
 
@@ -25,9 +26,9 @@ export default async function gerarEscala(dados){
             if (newListaPessoas.length == 0){
                 newListaPessoas = [...listaPessoas];
             };
-    
-            let newEscalaDia = geraEscalaDia(dia, newListaPessoas);
-    
+
+            let newEscalaDia = geraEscalaDia(dia, newListaPessoas, diasOptions);
+
             // caso nao funcione, extende a lista e tenta de novo
             if (newEscalaDia === null){
     
@@ -35,7 +36,7 @@ export default async function gerarEscala(dados){
                     ...newListaPessoas,
                     ...listaPessoas
                 ];
-                newEscalaDia = geraEscalaDia(dia, newListaPessoas);
+                newEscalaDia = geraEscalaDia(dia, newListaPessoas, diasOptions);
             };
 
             // só acrescenta se achar alguem disponivel e ainda nao incluido no dia
@@ -53,7 +54,7 @@ export default async function gerarEscala(dados){
     return newListaMes;
 };
 
-function geraEscalaDia(dia, listaPessoas){
+function geraEscalaDia(dia, listaPessoas, diasOptions){
 
     let escalaDia = null;
     const d = new Date(dia+defaultTimezone);
@@ -61,7 +62,7 @@ function geraEscalaDia(dia, listaPessoas){
 
     for (let pessoaIdx = 0; pessoaIdx < listaPessoas.length; pessoaIdx++ ){
         const pessoa = listaPessoas[pessoaIdx];
-        const pessoaListaSemanaIndex = pessoa.listaSemana.map( (diaSemana) => getDiaIndex(diaSemana) );
+        const pessoaListaSemanaIndex = pessoa.listaSemana.map( (diaSemana) => diasOptions[diaSemana] );
         // se o dia do mes e da semana não estiver nas listas, coloca a pessoa na escala e tira ela da fila
         if (!pessoaListaSemanaIndex.includes(diaIdx) && !pessoa.listaMes.includes(dia)){
             escalaDia = {   "dia": dia,

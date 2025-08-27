@@ -1,7 +1,7 @@
 import "./Pessoa.css";
 import FiltroDatas from "../FiltroDatas/FiltroDatas";
 
-export default function Pessoa({pessoa, index, listaPessoas, setListaPessoas}) {
+export default function Pessoa({pessoa, index, listaPessoas, setListaPessoas, diasOptions}) {
 
     const handleChange = function(evt, index) {
         const newLista = [...listaPessoas];
@@ -42,7 +42,7 @@ export default function Pessoa({pessoa, index, listaPessoas, setListaPessoas}) {
             <span className="remove" onClick={() => handleDelete(index)}>X</span>
         </div>
 
-        <FiltroDatas listaDiasMes={pessoa.listaMes} setListaDiasMes={changeDiasMes} listaDiasSemana={pessoa.listaSemana} setListaDiasSemana={changeDiasSemana} />
+        <FiltroDatas listaDiasMes={pessoa.listaMes} setListaDiasMes={changeDiasMes} listaDiasSemana={pessoa.listaSemana} setListaDiasSemana={changeDiasSemana} diasOptions={diasOptions} />
 
         <div className='separator' />
 
