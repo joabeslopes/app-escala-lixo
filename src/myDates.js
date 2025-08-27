@@ -4,13 +4,13 @@ var anoGlobal, listaFeriados;
 
 export const diasIndex = {
   "": "",
-  "Segunda": 1,
-  "Terça": 2,
-  "Quarta": 3,
-  "Quinta": 4,
-  "Sexta": 5,
-  "Sabado": 6,
-  "Domingo": 0
+  "segunda": 1,
+  "terça": 2,
+  "quarta": 3,
+  "quinta": 4,
+  "sexta": 5,
+  "sabado": 6,
+  "domingo": 0
 };
 
 function getLocaleString(diaISO, options){
