@@ -2,7 +2,7 @@ import { useState } from "react";
 import { diasIndex } from "../../myDates";
 
 export default function Dias({diasOptions, setDiasOptions}){
-    const [diaComplemento, setDiaComplemento] = useState('');
+    const [diaComplemento, setDiaComplemento] = useState("");
     const [diaNome, setDiaNome] = useState("");
 
     const handleSubmit = function(){

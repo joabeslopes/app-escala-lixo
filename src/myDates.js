@@ -93,7 +93,12 @@ export async function gerarListaMes(dados){
 
     // o dia nao é feriado, não está na exclusao da semana e nem do mes
     if (listaDiasSemana.includes(diaSemana) && !listaFeriados.includes(diaISO) && !listaExclusaoSemana.includes(diaSemana) && !exclusaoMes.includes(diaISO) ){
-      listaMes.push(diaISO);
+      // pode adicionar o dia mais de uma vez baseado na definição do usuário
+      const repeticoes = listaDiasSemana.filter(d => d === diaSemana).length;
+
+      for (let i = 0; i < repeticoes; i++) {
+        listaMes.push(diaISO);
+      };
     };
 
     // aumenta a data em 1 dia
