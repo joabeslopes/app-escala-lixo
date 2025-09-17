@@ -38,20 +38,20 @@ export default function Integracao({escalaMes, listaPessoas, setListaPessoas}) {
         get_session();
     }, []);
 
-    return <div className="external-container">
-        <h1 className="title">Integracao</h1>
-
-        {apiLoaded ?
-            <>
+    return <>
+    { apiLoaded ?
+        <div className="external-container">
+            <h1 className="title">Integracao</h1>
                 <LoginForm userLogged={userLogged} setUserLogged={setUserLogged} setMessage={setMessage} />
                 <EnvioPessoas userLogged={userLogged} setListaPessoas={setListaPessoas} setMessage={setMessage} />
                 <EnvioEscala userLogged={userLogged} escalaMes={escalaMes} setMessage={setMessage} />
-            </>
-            :
-            null
-        }
-        <Result messageObj={resultMessage} />
-    </div>
+                
+                <Result messageObj={resultMessage} />
+        </div>
+    :
+        null
+    }
+    </>
 };
 
 

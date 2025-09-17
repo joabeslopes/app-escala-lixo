@@ -22,7 +22,7 @@ export default function FiltroDatas({listaDiasMes, setListaDiasMes, listaDiasSem
 
   return (
     <div className="internal-container">
-        <label>Dias do mes</label>
+        <label>Dias do mes fora da escala</label>
         <input 
           name="diaMes"
           className="input"
@@ -34,7 +34,7 @@ export default function FiltroDatas({listaDiasMes, setListaDiasMes, listaDiasSem
           <a>* {getDiaPtBr(dia)}</a>
         </p>
       )}
-      <label>Dias da semana</label>
+      <label>Dias da semana fora da escala</label>
       <select
         name="diaSemana"
         className="input"

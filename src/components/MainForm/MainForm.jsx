@@ -78,10 +78,11 @@ export default function MainForm() {
 
         <h2 className="title">Dias da semana com escala</h2>
         <Dias diasOptions={diasOptions} setDiasOptions={setDiasOptions} />
+      </div>
 
+      <div className="external-container">
         <h2 className="title">Dias em geral sem escala</h2>
         <FiltroDatas listaDiasMes={diasMes} setListaDiasMes={setDiasMes} listaDiasSemana={diasSemana} setListaDiasSemana={setDiasSemana} diasOptions={diasOptions} />
-
       </div>
 
       <form className="external-container" onSubmit={handleSubmit}>

@@ -3,7 +3,7 @@ const defaultTimezoneOffset = 180;
 var anoGlobal, listaFeriados;
 
 export const diasIndex = {
-  "": "",
+  "Dia da semana": "",
   "segunda": 1,
   "terça": 2,
   "quarta": 3,
