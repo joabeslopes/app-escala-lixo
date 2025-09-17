@@ -1,0 +1,9 @@
+services:
+  gerador_escala:
+    build:
+      context: .
+    ports:
+      - "5000:5000"
+    volumes:
+      - .env:/app/.env
+    restart: always
