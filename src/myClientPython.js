@@ -1,6 +1,4 @@
-const protocol = window.location.protocol;
-const hostname = window.location.hostname;
-const apiUrl = protocol + '//' + hostname + ':5000' + '/api';
+const apiUrl = window.location.origin + '/api';
 
 export async function post(path, requestBody) {
 
