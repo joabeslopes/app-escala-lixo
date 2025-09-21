@@ -11,3 +11,11 @@
     margin-bottom: 5px;
     width: 100%;
 }
+
+.copy-button:hover{
+    cursor: pointer;
+}
+
+.copy-button:active{
+    background-color: #20212b;
+}
