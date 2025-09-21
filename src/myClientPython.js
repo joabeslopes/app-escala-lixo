@@ -1,4 +1,4 @@
-const apiUrl = window.location.origin + '/api';
+const apiUrl = import.meta.env.VITE_API_URL;
 
 export async function post(path, requestBody) {
 
