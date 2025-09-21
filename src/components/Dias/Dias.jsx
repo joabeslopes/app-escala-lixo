@@ -11,7 +11,7 @@ export default function Dias({diasOptions, setDiasOptions}){
         };
 
         const newDiasOptions = {...diasOptions};
-        const optionName = `${diaNome} ${diaComplemento}`;
+        const optionName = `${diaNome} ${diaComplemento}`.trim();
 
         newDiasOptions[optionName] = diasIndex[diaNome];
         setDiasOptions(newDiasOptions);
