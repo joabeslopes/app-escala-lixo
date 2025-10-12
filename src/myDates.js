@@ -70,8 +70,8 @@ export async function gerarListaMes(dados){
   const listaExclusaoSemana = exclusaoSemana.map( (d) => diasOptions[d] );
   const listaMes = [];
 
-  // Não buscar se o usuario marcar o checkbox
-  if (!ignoraFeriados){
+  // Só coloca feriados na lista de exclusão se o usuario marcar o checkbox
+  if (ignoraFeriados){
 
     if (ano !== anoGlobal){
       listaFeriados = await getFeriados(ano);
