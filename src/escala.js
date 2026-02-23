@@ -11,6 +11,7 @@ export default async function gerarEscala(dados){
     const newListaMes = [];
     const pessoasDia = dados.pessoasDia;
     const diasOptions = dados.diasOptions;
+    const estrategia = dados.estrategia;
 
     let newListaPessoas = [...listaPessoas];
 
@@ -27,7 +28,7 @@ export default async function gerarEscala(dados){
                 newListaPessoas = [...listaPessoas];
             };
 
-            let newEscalaDia = geraEscalaDia(dia, newListaPessoas, diasOptions);
+            let newEscalaDia = geraEscalaDia(dia, newListaPessoas, diasOptions, estrategia);
 
             // caso nao funcione, extende a lista e tenta de novo
             if (newEscalaDia === null){
@@ -36,7 +37,7 @@ export default async function gerarEscala(dados){
                     ...newListaPessoas,
                     ...listaPessoas
                 ];
-                newEscalaDia = geraEscalaDia(dia, newListaPessoas, diasOptions);
+                newEscalaDia = geraEscalaDia(dia, newListaPessoas, diasOptions, estrategia);
             };
 
             // só acrescenta se achar alguem disponivel e ainda nao incluido no dia
@@ -54,14 +55,30 @@ export default async function gerarEscala(dados){
     return newListaMes;
 };
 
-function geraEscalaDia(dia, listaPessoas, diasOptions){
+function diffDias(data1, data2) {
+    const d1 = new Date(data1 + defaultTimezone);
+    const d2 = new Date(data2 + defaultTimezone);
+    const diffTime = Math.abs(d2 - d1);
+    return Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+}
 
+function geraEscalaDia(dia, listaPessoas, diasOptions, estrategia){
     let escalaDia = null;
     const d = new Date(dia+defaultTimezone);
     const diaIdx = d.getDay();
 
     for (let pessoaIdx = 0; pessoaIdx < listaPessoas.length; pessoaIdx++ ){
         const pessoa = listaPessoas[pessoaIdx];
+
+        if (estrategia == 1) { // Dias alternados
+            const diaInicialPessoa = pessoa.listaMes[0];
+            const diff = diffDias(diaInicialPessoa, dia);
+            // Se a diferença for par, é um dia do mês indisponivel
+            if (diff % 2 === 0){
+                continue;
+            };
+        };
+
         const pessoaListaSemanaIndex = pessoa.listaSemana.map( (diaSemana) => diasOptions[diaSemana] );
         // se o dia do mes e da semana não estiver nas listas, coloca a pessoa na escala e tira ela da fila
         if (!pessoaListaSemanaIndex.includes(diaIdx) && !pessoa.listaMes.includes(dia)){

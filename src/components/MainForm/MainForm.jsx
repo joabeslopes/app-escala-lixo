@@ -7,6 +7,7 @@ import gerarEscala from "../../escala";
 import Integracao from "../Integracao/Integracao";
 import PessoaObj from "../../pessoaObj";
 import Dias from "../Dias/Dias";
+import Estrategia from "../Estrategia/Estrategia";
 
 
 export default function MainForm() {
@@ -27,6 +28,8 @@ export default function MainForm() {
 
   const [diasOptions, setDiasOptions] = useState({"":""});
 
+  const [estrategia, setEstrategia] = useState(0);
+
   const handleSubmit = async function (evt) {
 
     evt.preventDefault();
@@ -42,7 +45,8 @@ export default function MainForm() {
       exclusaoMes: [...diasMes],
       ignoraFeriados: ignoraFeriados,
       pessoasDia: pessoasDia,
-      diasOptions: {...diasOptions}
+      diasOptions: {...diasOptions},
+      estrategia: estrategia
     };
 
     const escala = await gerarEscala(dados);
@@ -78,6 +82,8 @@ export default function MainForm() {
 
         <h2 className="title">Dias da semana com escala</h2>
         <Dias diasOptions={diasOptions} setDiasOptions={setDiasOptions} />
+
+        <Estrategia estrategia={estrategia} setEstrategia={setEstrategia} />
       </div>
 
       <div className="external-container">
